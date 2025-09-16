@@ -1,0 +1,15 @@
+<div class="my-6">
+  <div class="user-info flex mb-3">
+    <img
+      [src]="'https://randomuser.me/api/portraits/men/' + commentItem.id + '.jpg'"
+      class="rounded-full w-16 mr-3"
+      alt="avatar"
+    />
+    <div class="user-text">
+      <p class="font-bold mb-2">{{ commentItem.name }}</p>
+      <p class="font- text-gray-500">{{ commentItem.email }}</p>
+    </div>
+  </div>
+  <p class="text-gray-500 font-medium leading-8">{{ commentItem.body }}</p>
+  <p class="text-gray-500">{{commentItem.id + commentItem.postId}} min ago</p>
+</div>

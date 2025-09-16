@@ -1,0 +1,59 @@
+@if (isOpen) {
+  <div
+    class="popup-overlay fixed bg-[#e9f1ff82] inset-0 py-10 z-20"
+    (click)="handleClose()"
+  ></div>
+
+  <div
+    class="popup flex flex-col w-[500px] top-1/2 left-1/2 -translate-1/2 bg-white rounded-2xl fixed z-30 shadow"
+  >
+    <div class="popup-header relative border-b border-b-gray-300">
+      <h2 class="text-2xl font-bold text-center py-3">Create Post</h2>
+      <div
+        class="close-button absolute w-9 h-9 rounded-full flex items-center justify-center right-5 top-1/2 -translate-y-1/2 bg-gray-200"
+      >
+        <i
+          class="bi bi-x cursor-pointer text-4xl"
+          (click)="handleClose()"
+        ></i>
+      </div>
+    </div>
+
+    <form class="flex flex-col p-4 grow" [formGroup]="postForm" (ngSubmit)="onSubmit()">
+      <div class="info flex gap-2">
+        <img
+          [src]="'https://randomuser.me/api/portraits/men/1.jpg'"
+          class="w-11 h-11 border-2 border-gray-600 rounded-full"
+          alt="avatar"
+        />
+        <div class="flex flex-col gap-1">
+          <span class="text-xl font-bold">Abdullatif Jarkas</span>
+          <input
+            type="text"
+            id="title"
+            formControlName="title"
+            placeholder="post title here.."
+            class="outline-0"
+          />
+        </div>
+      </div>
+
+      <div class="post-body grow flex flex-col">
+        <textarea
+          id="body"
+          formControlName="body"
+          rows="5"
+          class="outline-0 grow mt-4 text-2xl placeholder:text-gray-600"
+          placeholder="What's on your mind, Abdullatif?"
+        ></textarea>
+
+        <button
+          type="submit"
+          class="bg-gray-200 font-semibold text-gray-600 mt-4 h-9 rounded-lg cursor-pointer"
+        >
+          Post
+        </button>
+      </div>
+    </form>
+  </div>
+}

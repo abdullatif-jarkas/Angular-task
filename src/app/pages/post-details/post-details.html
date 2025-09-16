@@ -1,0 +1,22 @@
+<div class="container flex flex-col-reverse md:flex-row px-5 mx-auto p-6 mt-20">
+  <div class="left-col w-full md:w-1/4 md:pr-7">
+    <h2 class="text-xl text-gray-700">Recent Blog Posts</h2>
+    @for (post of suggestedPosts(); track post.id) {
+      <div class="my-4">
+        <app-post-item [post]="post"></app-post-item>
+      </div>
+    }
+  </div>
+  <div class="right-col w-full md:w-3/4 md:pl-7">
+    <h2 class="text-4xl md:text-6xl font-bold mb-6">{{ post().title }}</h2>
+    <img src="/images/article.png" alt="article image" class="w-full mb-8" />
+    <p class="text-xl text-gray-700">{{ post().body }}</p>
+
+    <h3 class="my-8 text-xl font-semibold">Comments</h3>
+    <div class="comments-section mt-4">
+      @for (comment of comments(); track comment.id) {
+        <app-comment-item [commentItem]="comment"></app-comment-item>
+      }
+    </div>
+  </div>
+</div>

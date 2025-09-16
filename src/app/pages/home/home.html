@@ -1,0 +1,11 @@
+<div class="home">
+  <app-hero></app-hero>
+  <div class="container px-5 mx-auto">
+    <app-text-field></app-text-field>
+    <app-recent-posts></app-recent-posts>
+    <section>
+      <h2 class="font-semibold text-2xl mb-8">All blog posts</h2>
+      <app-posts-list [posts]="posts()"></app-posts-list>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<section class="mb-16">
+  <h2 class="font-semibold text-2xl mb-8">Recent Posts</h2>
+  <div class="flex gap-x-8 flex-col lg:flex-row">
+    <div class="left">
+      <app-post-item [post]="recentPosts[0]"></app-post-item>
+    </div>
+    <div class="right flex flex-col gap-4">
+      <app-post-item [post]="recentPosts[1]" [recentRight]="true"></app-post-item>
+      <app-post-item [post]="recentPosts[2]" [recentRight]="true"></app-post-item>
+    </div>
+  </div>
+  <app-post-item [post]="recentPosts[3]"></app-post-item>
+</section>

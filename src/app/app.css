@@ -1,0 +1,11 @@
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@theme {
+  --color-primary: #A27B5C;
+  --color-secondary: #3F4E4F;
+}
