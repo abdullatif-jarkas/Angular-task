@@ -1,0 +1,37 @@
+<app-navbar />
+<div class="blog-body flex h-[calc(100vh-60px)] overflow-y-hidden">
+  <section class="sidebar border-r border-r-gray-200 w-2/10">
+    <app-sidebar></app-sidebar>
+  </section>
+  <div class="w-8/10 flex">
+    <section
+      class="content w-10/10 relative"
+      style="background-image: url('/images/background.png')"
+    >
+      @if (!auth.isLoggedIn()){
+      <section
+        class="news flex items-center font-news shadow backdrop-blur-xs z-20 w-full border-b border-b-gray-200 transition-all duration-500 ease-in-out overflow-hidden"
+        [ngClass]="showNews ? 'h-12 ' : 'h-0'"
+      >
+        <div class="flex items-center p-2 overflow-hidden flex-1">
+          <div class="whitespace-nowrap animate-marquee text-primary text-sm">
+            🚀 Sign up today to write, comment, and join the conversation! ✨ |
+            📖 Discover inspiring stories shared by our community | 💬 Connect
+            with others and make your voice heard!
+          </div>
+        </div>
+        <div class="close-icon border-l border-l-gray-200 px-2">
+          <i class="fa fa-times cursor-pointer" (click)="closeNews()"></i>
+        </div>
+      </section>
+      }
+
+      <div
+        class="w-9/10 mx-auto border-x border-x-gray-200 bg-white overflow-y-auto no-scrollbar h-screen"
+      >
+        <router-outlet />
+      </div>
+    </section>
+    <!-- <section class="w-2/10 border-l border-l-gray-200"></section> -->
+  </div>
+</div>

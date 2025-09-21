@@ -1,5 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Inter, "Helvetica Neue", sans-serif; }
+@theme {
+  --color-primary: #232020;
+  --color-secondary: #79D7BE;
+  --font-layout: Poppins, sans-serif;
+  --font-posts: Merriweather, sans-serif;
+  --font-news: "Roboto Condensed", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  overflow-y: auto;
+}
+
+h1 {
+  font-family: "Playfair Display", sans-serif;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: inline-block;
+  min-width: 100%;
+  animation: marquee 40s linear infinite;
+}
+

@@ -1,22 +1,60 @@
-<div class="container flex flex-col-reverse md:flex-row px-5 mx-auto p-6 mt-20">
-  <div class="left-col w-full md:w-1/4 md:pr-7">
-    <h2 class="text-xl text-gray-700">Recent Blog Posts</h2>
-    @for (post of suggestedPosts(); track post.id) {
-      <div class="my-4">
-        <app-post-item [post]="post"></app-post-item>
-      </div>
-    }
-  </div>
-  <div class="right-col w-full md:w-3/4 md:pl-7">
-    <h2 class="text-4xl md:text-6xl font-bold mb-6">{{ post().title }}</h2>
-    <img src="/images/article.png" alt="article image" class="w-full mb-8" />
+<div class="flex flex-col-reverse md:flex-row px-5 mx-auto p-6">
+  <div class="w-full md:pl-7">
+    @if (loading()) {
+    <div class="animate-pulse">
+      <div class="h-10 bg-gray-200 rounded w-3/4 mb-4"></div>
+    </div>
+    } @else {
+    <h2 class="text-4xl md:text-6xl font-bold mb-6 capitalize">
+      {{ post().title }}
+    </h2>
+    } @if (loading()) {
+    <div class="animate-pulse space-y-3">
+      <div class="h-4 bg-gray-200 rounded w-full"></div>
+      <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+    </div>
+    } @else {
     <p class="text-xl text-gray-700">{{ post().body }}</p>
+    }
 
-    <h3 class="my-8 text-xl font-semibold">Comments</h3>
-    <div class="comments-section mt-4">
-      @for (comment of comments(); track comment.id) {
-        <app-comment-item [commentItem]="comment"></app-comment-item>
-      }
+    <div
+      class="flex items-center justify-between text-gray-600 border-y border-y-gray-200 my-8 py-3"
+    >
+      <div class="left flex items-center gap-1">
+        <i class="fa-regular fa-comments"></i>
+        @if (loading()) {
+        <span class="h-4 w-6 bg-gray-200 rounded animate-pulse"></span>
+        } @else {
+        {{ comments().length }}
+        }
+      </div>
+      <div class="right flex items-center gap-2">
+        <i
+          class="fa-regular fa-bookmark cursor-pointer hover:text-secondary transition-colors"
+          [ngClass]="saved() ? 'fa-solid' : 'fa-regular'"
+          (click)="toggleBookmark()"
+        ></i>
+        <i
+          class="fa-regular fa-share-from-square cursor-pointer hover:text-secondary transition-colors"
+          (click)="sharePost()"
+        ></i>
+        <i
+          class="fa-solid fa-user-plus cursor-pointer hover:text-secondary transition-colors"
+        ></i>
+      </div>
+    </div>
+
+    <h3 class="mb-8 text-xl font-semibold">Comments</h3>
+    <div class="comments-section mt-4 mb-15">
+      @if (loading()) {
+      <div class="space-y-4 animate-pulse">
+        <div class="h-6 bg-gray-200 rounded w-full"></div>
+        <div class="h-6 bg-gray-200 rounded w-5/6"></div>
+        <div class="h-6 bg-gray-200 rounded w-4/6"></div>
+      </div>
+      } @else { @for (comment of comments(); track comment.id) {
+      <app-comment-item [commentItem]="comment"></app-comment-item>
+      } }
     </div>
   </div>
 </div>

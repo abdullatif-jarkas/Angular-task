@@ -1,0 +1,40 @@
+<nav
+  class="flex justify-center items-center font-layout bg-white w-full z-20 h-[60px] top-0 border-b border-b-gray-200"
+>
+  <div class="flex w-full items-center justify-between grow mx-auto px-5">
+    <a routerLink="/">
+      <img src="shared-logo.png" class="w-32" alt="logo" />
+    </a>
+
+    <div class="auth-buttons flex items-center gap-2">
+      @if (!auth.isLoggedIn()) {
+      <a
+        routerLink="/auth/login"
+        class="rounded-sm px-3 py-1 bg-primary hover:bg-secondary transition text-white cursor-pointer"
+      >
+        Login
+      </a>
+      <a
+        routerLink="/auth/signup"
+        class="px-3 py-1 text-primary hover:bg-secondary hover:text-white rounded-sm transition cursor-pointer"
+      >
+        Sign Up
+      </a>
+      } @else {
+      <button
+        (click)="logout()"
+        class="rounded-sm px-3 py-1 hover:bg-secondary hover:text-white transition cursor-pointer"
+      >
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </button>
+      }
+    </div>
+
+    <div
+      class="burger-icon text-3xl md:hidden cursor-pointer"
+      (click)="handleClick()"
+    >
+      <i class="bi bi-list"></i>
+    </div>
+  </div>
+</nav>

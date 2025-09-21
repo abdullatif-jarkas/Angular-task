@@ -1,11 +1,23 @@
-<div class="home">
-  <app-hero></app-hero>
-  <div class="container px-5 mx-auto">
-    <app-text-field></app-text-field>
-    <app-recent-posts></app-recent-posts>
-    <section>
-      <h2 class="font-semibold text-2xl mb-8">All blog posts</h2>
-      <app-posts-list [posts]="posts()"></app-posts-list>
-    </section>
-  </div>
-</div>
+<section class="home px-5 grid grid-cols-3 gap-8 pt-5">
+
+  @if (loading()) {
+    @for (_ of [1,2,3,4,5,6]; track _) {
+      <div class="animate-pulse border border-gray-200 rounded-lg p-4 space-y-3">
+        <div class="h-40 bg-gray-200 rounded"></div>
+        <div class="h-6 bg-gray-200 rounded w-3/4"></div>
+        <div class="h-4 bg-gray-200 rounded w-2/4"></div>
+      </div>
+    }
+  }
+
+  @else {
+    @for (post of posts(); track post.id) {
+      <app-post-item
+        [post]="post"
+        [commentsCount]="post.commentsCount"
+        [user]="post.user"
+      ></app-post-item>
+    }
+  }
+
+</section>

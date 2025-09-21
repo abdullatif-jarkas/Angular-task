@@ -1,27 +1,40 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { PostService } from '../../services/post';
+import { PostService } from '../../services/post/post';
 import { Post } from '../../models/post.type';
-import { Hero } from "../../components/hero/hero";
-import { PostsList } from "../../components/posts-list/posts-list";
-import { RecentPosts } from '../../components/recent-posts/recent-posts';
-import { TextField } from '../../components/text-field/text-field';
-
+import { PostItem } from '../../shared/components/post-item/post-item';
+import { UserService } from '../../services/user/user';
 @Component({
   selector: 'app-home',
-  imports: [Hero, PostsList, RecentPosts, TextField],
+  imports: [PostItem],
   templateUrl: './home.html',
 })
-
 export class Home implements OnInit {
   postService = inject(PostService);
+  UserService = inject(UserService);
   posts = signal<Post[]>([]);
+  loading = signal(true);
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe((posts) => {
       this.posts.set(posts);
+
+      posts.forEach((post) => {
+        this.postService.getCommentsCount(post.id).subscribe((comments) => {
+          const updatedPosts = this.posts().map((p) =>
+            p.id === post.id ? { ...p, commentsCount: comments.length } : p
+          );
+          this.posts.set(updatedPosts);
+        });
+
+        this.UserService.getUserById(post.userId).subscribe((user) => {
+          const updatedPosts = this.posts().map((p) =>
+            p.id === post.id ? { ...p, user } : p
+          );
+          this.posts.set(updatedPosts);
+        });
+      });
+
+      this.loading.set(false)
     });
-  }
-  get recentPosts() {
-    return this.posts().slice(0, 4);
   }
 }

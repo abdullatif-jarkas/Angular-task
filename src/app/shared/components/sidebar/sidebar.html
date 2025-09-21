@@ -1,0 +1,89 @@
+<div class="sidebar font-layout flex flex-col justify-between h-full">
+  <div class="main p-4">
+    @if (!auth.isLoggedIn()) {
+    <a
+      routerLink="/auth/login"
+      class="rounded-sm px-2 block text-center w-full py-1 bg-primary hover:bg-secondary transition text-white cursor-pointer"
+    >
+      Get Started
+    </a>
+    }
+
+    <div
+      class="search flex items-center p-2 border border-gray-200 rounded-4xl my-4 border-b border-b-gray-100 focus-within:ring-2 focus-within:ring-secondary transition-all"
+    >
+      <i class="fa-solid fa-magnifying-glass mr-2 text-gray-300"></i>
+      <input
+        type="text"
+        placeholder="Search"
+        class="w-full placeholder:text-gray-400 placeholder:text-sm focus:outline-none"
+      />
+    </div>
+
+    <div class="navigation mb-4 border-b border-b-gray-100 pb-4">
+      <ul class="flex flex-col gap-2">
+        <li
+          routerLink="/posts"
+          routerLinkActive="text-secondary font-bold border-l-2  border-l-secondary p-2"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
+        >
+          <i class="fa-regular fa-house mr-2 text-xl" routerLinkActive="fa-solid"></i>
+          <span class="block py-2 transition-colors cursor-pointer">Feed</span>
+        </li>
+
+        <li
+          routerLink="/profile"
+          routerLinkActive="text-secondary font-bold border-l-2  border-l-secondary p-2"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
+        >
+          <i class="fa-regular fa-user mr-2 text-xl" routerLinkActive="fa-solid"></i>
+          <span class="block py-2 transition-colors">Profile</span>
+        </li>
+        <li
+          routerLink="/saved"
+          routerLinkActive="text-secondary font-bold border-l-2  border-l-secondary p-2"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
+        >
+          <i class="fa-regular fa-bookmark mr-2 text-xl" routerLinkActive="fa-solid"></i>
+          <span class="block py-2 transition-colors">Saved</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="categories mb-4">
+      <ul class="flex flex-col gap-1">
+        <li><a class="text-primary hover:underline">Programming</a></li>
+        <li><a class="text-primary hover:underline">Design</a></li>
+        <li>
+          <a class="text-primary hover:underline">Artificial Intelligence</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="social flex gap-3 border-t p-4 border-t-gray-200 justify-around">
+    <a href="#" class="text-black hover:text-primary"
+      ><i
+        class="fa-brands fa-facebook-f text-xl text-primary hover:text-secondary cursor-pointer"
+      ></i
+    ></a>
+    <a href="#" class="text-black hover:text-primary"
+      ><i
+        class="fa-brands fa-x-twitter text-xl text-primary hover:text-secondary cursor-pointer"
+      ></i
+    ></a>
+    <a href="#" class="text-black hover:text-primary"
+      ><i
+        class="fa-brands fa-instagram text-xl text-primary hover:text-secondary cursor-pointer"
+      ></i
+    ></a>
+    <a href="#" class="text-black hover:text-primary"
+      ><i
+        class="fa-brands fa-linkedin-in text-xl text-primary hover:text-secondary cursor-pointer"
+      ></i
+    ></a>
+    <!-- <a href="#" class="text-black hover:text-primary"><i class="fa-brands fa-behance text-xl text-secondary"></i></a> -->
+  </div>
+</div>
