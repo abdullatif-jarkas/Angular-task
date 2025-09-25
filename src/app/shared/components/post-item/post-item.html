@@ -3,15 +3,21 @@
 >
   <div>
     <div class="post-info relative flex justify-between items-center"></div>
-    <div class="user flex items-center gap-2">
+
+    <a
+      [routerLink]="['/users', user?.id]"
+      class="user flex items-center gap-2 cursor-pointer"
+    >
       <img
         [src]="getAvatarUrl(user?.id)"
         alt="Avatar"
         class="w-5 h-5 rounded-full"
       />
+      <p class="text-black text-sm">
+        {{ user?.name || "Unknown Author" }}
+      </p>
+    </a>
 
-      <p class="text-black text-sm">{{ user?.name || "username" }}</p>
-    </div>
     <a [routerLink]="['/posts', post.id]" class="shrink-0 self-start">
       <div class="flex justify-between items-center mb-3">
         <h3 class="font-semibold text-2xl capitalize">
@@ -20,14 +26,34 @@
       </div>
     </a>
   </div>
+
   <div>
-    <p class="text-[#555] leading-7 font-posts text-base mb-6 truncate w-64">
+    <p class="text-[#555] leading-7 font-posts text-base mb-6 truncate w-full">
       {{ post.body }}
     </p>
-    <div class="flex items-center text-sm text-secondary justify-end">
-      <i class="fa-regular fa-bookmark mr-4"></i>
-      <div class="comments">
-        <i class="fa-regular fa-comment mr-0.5"></i>
+
+    <div class="flex items-center text-sm text-secondary justify-end gap-4">
+      @if (authService.isLoggedIn()) {
+        <div
+          class="likes flex items-center gap-1 cursor-pointer"
+          (click)="toggleLike()"
+        >
+          <i
+            class="fa-heart transition-transform duration-300 active:scale-125"
+            [ngClass]="liked() ? 'fa-solid text-red-500' : 'fa-regular'"
+          ></i>
+          <span>{{ likesCount() }}</span>
+        </div>
+      }
+
+      <i
+        class="fa fa-bookmark cursor-pointer transition-transform duration-300 active:scale-125"
+        [ngClass]="saved() ? 'fa-solid' : 'fa-regular'"
+        (click)="toggleBookmark()"
+      ></i>
+
+      <div class="comments flex items-center gap-1">
+        <i class="fa-regular fa-comment"></i>
         <span>{{ commentsCount }}</span>
       </div>
     </div>

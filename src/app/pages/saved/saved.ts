@@ -1,11 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PostItem } from '../../shared/components/post-item/post-item';
+import { PostService } from '../../services/post/post';
+import { AuthService } from '../../services/auth/auth';
+import { Post } from '../../models/post.type';
 
 @Component({
   selector: 'app-saved',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, PostItem],
   templateUrl: './saved.html',
-  styleUrl: './saved.css'
+  styleUrl: './saved.css',
 })
-export class Saved {
+export class Saved implements OnInit {
+  private postService = inject(PostService);
+  private authService = inject(AuthService);
 
+  savedPosts: Post[] = [];
+  currentUserId: string | null = null;
+
+  ngOnInit(): void {
+    this.currentUserId = this.authService.getUserId();
+
+    if (this.currentUserId) {
+      this.postService.getSavedPosts(this.currentUserId).subscribe({
+        next: (posts) => (this.savedPosts = posts),
+        error: (err) => console.error('Error loading saved posts:', err),
+      });
+    }
+  }
 }

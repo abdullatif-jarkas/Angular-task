@@ -1,1 +1,38 @@
-<p>write-post works!</p>
+<div class="flex flex-col gap-16 max-w-4xl mx-auto h-full p-6 font-posts">
+  <h2 class="text-2xl font-extrabold text-primary">
+    Share your thoughts<i class="fa-solid fa-feather"></i>
+  </h2>
+
+  <form
+    (ngSubmit)="onSubmit()"
+    #postForm="ngForm"
+    class="flex flex-col h-full gap-4"
+  >
+    <input
+      type="text"
+      [(ngModel)]="title"
+      name="title"
+      placeholder="Enter post title"
+      required
+      class="py-2 w-full text-2xl font-bold text-primary placeholder:text-2xl placeholder:text-gray-400 outline-0 mb-10"
+    />
+
+    <textarea
+      [(ngModel)]="body"
+      name="body"
+      placeholder="Write your post here..."
+      rows="6"
+      required
+      class="py-2 w-full text-2xl text-primary grow resize-none placeholder:text-2xl placeholder:text-gray-400 outline-0"
+    ></textarea>
+
+    <div class="publish-btn flex justify-end">
+      <button
+        type="submit"
+        class="bg-white border-2 border-secondary text-secondary hover:bg-secondary hover:text-white outline-0 transition-all font-layout cursor-pointer font-semibold py-1 px-4 rounded-4xl"
+      >
+        Publish
+      </button>
+    </div>
+  </form>
+</div>

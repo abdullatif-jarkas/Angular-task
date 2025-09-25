@@ -1,0 +1,31 @@
+<div class="max-w-3xl mx-auto p-6">
+  <h2 class="text-2xl font-bold mb-6">🏆 Top Authors</h2>
+
+  @if (loading) {
+  <p>Loading authors...</p>
+  } @else { @if (topAuthors.length > 0) {
+  <div class="space-y-4">
+    @for (author of topAuthors; track author.id) {
+    <div
+      class="p-4 border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4"
+    >
+      <img
+        [src]="author.avatar"
+        [alt]="author.name"
+        class="w-12 h-12 rounded-full"
+      />
+      <div>
+        <a [routerLink]="['/users', author.id]">
+          <h3 class="font-semibold hover:text-secondary transition-colors">{{ author.name }}</h3>
+        </a>
+        <p class="text-sm text-gray-500">
+          ❤️ {{ author.likes }} total likes · 📝 {{ author.posts.length }} posts
+        </p>
+      </div>
+    </div>
+    }
+  </div>
+  } @else {
+  <p class="text-gray-500">No authors found.</p>
+  } }
+</div>

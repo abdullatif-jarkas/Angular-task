@@ -1,0 +1,46 @@
+<div class="max-w-4xl mx-auto p-6">
+  <!-- User Info -->
+  @if (user()) {
+    <div class="flex items-center gap-4 mb-6">
+      <img
+        [src]="user().avatar"
+        alt="avatar"
+        class="w-16 h-16 rounded-full border"
+      />
+      <div>
+        <h2 class="text-2xl font-bold">{{ user().name }}</h2>
+        <p class="text-gray-500">ID: {{ user().id }}</p>
+      </div>
+      <div class="ml-auto">
+        <button
+          class="px-4 py-2 rounded text-white"
+          [ngClass]="
+            isFollowing()
+              ? 'bg-red-500 hover:bg-red-600'
+              : 'bg-primary hover:bg-secondary'
+          "
+          (click)="toggleFollow()"
+        >
+          {{ isFollowing() ? 'Unfollow' : 'Follow' }}
+        </button>
+      </div>
+    </div>
+
+    <!-- User Posts -->
+    <div>
+      <h3 class="text-xl font-semibold mb-4">Posts</h3>
+      @if (loading()) {
+        <p>Loading posts...</p>
+      } @else {
+        <div class="space-y-4">
+          @for (post of posts(); track post.id) {
+            <div class="border p-4 rounded hover:shadow">
+              <h4 class="font-bold text-lg mb-1">{{ post.title }}</h4>
+              <p class="text-gray-600">{{ post.body }}</p>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

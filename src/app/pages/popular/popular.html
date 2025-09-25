@@ -1,0 +1,20 @@
+<div class="max-w-3xl mx-auto p-6">
+  <h2 class="text-2xl font-bold mb-6">🔥 Most Liked Posts</h2>
+
+  @if (loading) {
+    <p>Loading posts...</p>
+  } @else {
+    @if (popularPosts.length > 0) {
+      <div class="space-y-4">
+        @for (item of popularPosts; track item.post.id) {
+          <div class="">
+            <app-post-item [post]="item.post"></app-post-item>
+            <p class="text-sm text-gray-500 mt-1">❤️ {{ item.likes }} likes</p>
+          </div>
+        }
+      </div>
+    } @else {
+      <p class="text-gray-500">No popular posts yet.</p>
+    }
+  }
+</div>

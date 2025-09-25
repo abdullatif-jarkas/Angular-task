@@ -21,11 +21,28 @@
         Sign Up
       </a>
       } @else {
+      <a
+        routerLink="/write"
+        class="px-3 py-1 text-primary hover:bg-secondary hover:text-white rounded-sm transition cursor-pointer"
+      >
+        <i class="fa-solid fa-feather text-primary"></i>
+      </a>
+      <a
+        routerLink="/profile"
+      >
+        <img
+          [src]="userAvatar"
+          (error)="onImgError($event)"
+          class="w-10 h-10 rounded-full border border-primary cursor-pointer"
+          alt="avatar"
+        />
+      </a>
+
       <button
         (click)="logout()"
         class="rounded-sm px-3 py-1 hover:bg-secondary hover:text-white transition cursor-pointer"
       >
-        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <i class="fa-solid fa-arrow-right-from-bracket text-primary"></i>
       </button>
       }
     </div>

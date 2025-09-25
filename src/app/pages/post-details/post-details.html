@@ -8,14 +8,27 @@
     <h2 class="text-4xl md:text-6xl font-bold mb-6 capitalize">
       {{ post().title }}
     </h2>
-    } @if (loading()) {
-    <div class="animate-pulse space-y-3">
-      <div class="h-4 bg-gray-200 rounded w-full"></div>
-      <div class="h-4 bg-gray-200 rounded w-5/6"></div>
-    </div>
-    } @else {
-    <p class="text-xl text-gray-700">{{ post().body }}</p>
     }
+    <div class="flex items-center gap-3 mb-4">
+      @if (userId() !== null) {
+      <img
+        [src]="avatarUrl()"
+        (error)="onImageError($event)"
+        class="w-12 h-12 rounded-full border cursor-pointer"
+        alt="author avatar"
+        [routerLink]="['/users', userId()]"
+      />
+      }
+
+      <div>
+        <p class="text-sm text-gray-400">Post by</p>
+        @if (userName()) {
+        <p class="font-semibold">{{ userName() }}</p>
+        } @else {
+        <p class="text-gray-500">Unknown author</p>
+        }
+      </div>
+    </div>
 
     <div
       class="flex items-center justify-between text-gray-600 border-y border-y-gray-200 my-8 py-3"
@@ -30,7 +43,7 @@
       </div>
       <div class="right flex items-center gap-2">
         <i
-          class="fa-regular fa-bookmark cursor-pointer hover:text-secondary transition-colors"
+          class="fa-regular fa-bookmark cursor-pointer hover:text-secondary transition-all duration-300 active:scale-125"
           [ngClass]="saved() ? 'fa-solid' : 'fa-regular'"
           (click)="toggleBookmark()"
         ></i>
@@ -44,7 +57,16 @@
       </div>
     </div>
 
-    <h3 class="mb-8 text-xl font-semibold">Comments</h3>
+    @if (loading()) {
+    <div class="animate-pulse space-y-3">
+      <div class="h-4 bg-gray-200 rounded w-full"></div>
+      <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+    </div>
+    } @else {
+    <p class="text-xl text-gray-700">{{ post().body }}</p>
+    }
+
+    <h3 class="my-8 text-xl font-semibold">Comments</h3>
     <div class="comments-section mt-4 mb-15">
       @if (loading()) {
       <div class="space-y-4 animate-pulse">

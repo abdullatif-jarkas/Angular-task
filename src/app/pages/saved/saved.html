@@ -1,1 +1,13 @@
-<p>saved works!</p>
+<div class="max-w-3xl mx-auto p-6">
+  <h2 class="text-xl font-bold mb-4">Saved Posts</h2>
+
+  @if (savedPosts.length > 0) {
+  <div class="flex flex-col gap-4">
+    @for (post of savedPosts; track post.id) {
+    <app-post-item [post]="post"></app-post-item>
+    }
+  </div>
+  } @else {
+  <p class="text-gray-500">No saved posts yet.</p>
+  }
+</div>
