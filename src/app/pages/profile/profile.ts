@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth/auth';
 import { Post } from '../../models/post.type';
+import { Router } from '@angular/router';
+import { PostService } from '../../services/post/post';
+
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -12,17 +15,23 @@ import { Post } from '../../models/post.type';
 export class Profile implements OnInit {
   private auth = inject(AuthService);
   private http = inject(HttpClient);
+  private postService = inject(PostService);
+  private router = inject(Router);
 
   user: any = null;
   posts: Post[] = [];
   loading = true;
+
+  openMenuId: number | null = null;
 
   ngOnInit(): void {
     this.user = this.auth.getUser();
 
     if (this.user) {
       this.http
-        .get<Post[]>(`https://jsonplaceholder.typicode.com/posts?userId=${this.user.id}`)
+        .get<Post[]>(
+          `https://jsonplaceholder.typicode.com/posts?userId=${this.user.id}`
+        )
         .subscribe({
           next: (data) => {
             this.posts = data;
@@ -38,7 +47,30 @@ export class Profile implements OnInit {
     }
   }
 
+  onEditPost(post: Post) {
+    this.router.navigate(['/posts/edit', post.id]);
+  }
+
   onImageError(event: Event) {
     (event.target as HTMLImageElement).src = 'assets/images/default-avatar.png';
+  }
+
+  toggleMenu(postId: number) {
+    this.openMenuId = this.openMenuId === postId ? null : postId;
+  }
+
+  onDeletePost(post: Post) {
+    if (confirm('Are you sure you want to delete this post?')) {
+      this.postService.deletePost(post.id).subscribe({
+        next: () => {
+          this.posts = this.posts.filter((p) => p.id !== post.id);
+          alert('Post deleted successfully');
+        },
+        error: (err) => {
+          console.error('Error deleting post:', err);
+          alert('Failed to delete the post');
+        },
+      });
+    }
   }
 }

@@ -1,4 +1,6 @@
-<div class="flex flex-col-reverse md:flex-row px-5 mx-auto p-6">
+<div
+  class="flex flex-col-reverse md:flex-row px-5 mx-auto p-6 bg-white border-x border-x-gray-200"
+>
   <div class="w-full md:pl-7">
     @if (loading()) {
     <div class="animate-pulse">
@@ -23,7 +25,12 @@
       <div>
         <p class="text-sm text-gray-400">Post by</p>
         @if (userName()) {
-        <p class="font-semibold">{{ userName() }}</p>
+        <p
+          class="font-semibold cursor-pointer"
+          [routerLink]="['/users', userId()]"
+        >
+          {{ userName() }}
+        </p>
         } @else {
         <p class="text-gray-500">Unknown author</p>
         }
@@ -42,17 +49,28 @@
         }
       </div>
       <div class="right flex items-center gap-2">
+        @if (authService.isLoggedIn()){
         <i
-          class="fa-regular fa-bookmark cursor-pointer hover:text-secondary transition-all duration-300 active:scale-125"
+          class="fa-bookmark cursor-pointer hover:text-secondary transition-all duration-300 active:scale-125"
           [ngClass]="saved() ? 'fa-solid' : 'fa-regular'"
           (click)="toggleBookmark()"
+          [title]="saved() ? 'Unsave' : 'Save'"
         ></i>
+        <i
+          class="cursor-pointer hover:text-secondary transition-colors"
+          [ngClass]="
+            following()
+              ? 'fa-solid fa-user-minus text-red-500'
+              : 'fa-solid fa-user-plus'
+          "
+          title="{{ following() ? 'Unfollow' : 'Follow' }}"
+          (click)="toggleFollow()"
+        ></i>
+        }
         <i
           class="fa-regular fa-share-from-square cursor-pointer hover:text-secondary transition-colors"
           (click)="sharePost()"
-        ></i>
-        <i
-          class="fa-solid fa-user-plus cursor-pointer hover:text-secondary transition-colors"
+          title="share"
         ></i>
       </div>
     </div>

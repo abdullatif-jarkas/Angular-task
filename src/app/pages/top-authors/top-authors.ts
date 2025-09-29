@@ -15,14 +15,19 @@ export class TopAuthors {
   private postService = inject(PostService);
   private userService = inject(UserService);
 
-  topAuthors: { id: number; name: string; avatar: string; likes: number; posts: Post[] }[] = [];
+  topAuthors: {
+    id: number;
+    name: string;
+    avatar: string;
+    likes: number;
+    posts: Post[];
+  }[] = [];
   loading = true;
 
   ngOnInit() {
     this.postService.getPosts().subscribe((posts) => {
       const authorsStats = this.postService.getTopAuthors(posts, 5);
 
-      // نجيب بيانات كل مؤلف
       authorsStats.forEach((author) => {
         this.userService.getUserById(author.userId).subscribe((user) => {
           this.topAuthors.push({
@@ -33,7 +38,6 @@ export class TopAuthors {
             posts: author.posts,
           });
 
-          // إعادة ترتيب المصفوفة بعد إضافة كل مؤلف
           this.topAuthors.sort((a, b) => b.likes - a.likes);
           this.loading = false;
         });

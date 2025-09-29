@@ -1,9 +1,13 @@
-<app-navbar />
-<div class="blog-body flex h-[calc(100vh-60px)] overflow-y-hidden">
-  <section class="sidebar border-r border-r-gray-200 w-2/10">
+<app-navbar (burgerClick)="toggleSidebar()" />
+<div class="blog-body flex h-[calc(100vh-60px)] overflow-y-hidden relative">
+  <section
+    class="sidebar border-r border-r-gray-200 absolute lg:translate-x-0 lg:static bg-white bottom-0 top-0 z-10 lg:w-2/10 overflow-x-hidden transform transition-transform duration-300 ease-in-out"
+    [ngClass]="sidebarOpen() ? 'translate-x-0' : '-translate-x-full'"
+  >
     <app-sidebar></app-sidebar>
   </section>
-  <div class="w-8/10 flex">
+
+  <div class="w-full lg:w-8/10 flex transition-all">
     <section
       class="content w-10/10 relative"
       style="background-image: url('/images/background.png')"
@@ -26,9 +30,7 @@
       </section>
       }
 
-      <div
-        class="w-9/10 mt-2 rounded-t-2xl mx-auto relative border border-gray-200 bg-white overflow-y-auto no-scrollbar h-full pb-8"
-      >
+      <div class="w-9/10 mx-auto relative overflow-y-auto no-scrollbar h-full">
         <router-outlet />
       </div>
     </section>

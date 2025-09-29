@@ -1,36 +1,77 @@
-<div>
-  <div class="bg-gradient-to-b from-[#2E5077] to-[#79D7BE] border-b-2 border-primary relative h-40 mb-10">
-    <div class="absolute left-1/2 -translate-x-1/2 -bottom-8 py-0 px-6 m-0 w-full max-w-4xl mx-auto flex items-center gap-4">
-      <img
-        [src]="user ? 'https://randomuser.me/api/portraits/men/' + user.id + '.jpg' : 'assets/images/default-avatar.png'"
-        (error)="onImageError($event)"
-        class="w-20 h-20 rounded-full border-2 border-primary"
-        alt="avatar"
-      />
-      <div>
-        <h2 class="text-4xl text-white font-bold mb-3">{{ user?.name }}</h2>
-        <p class="text-gray-500">{{ user?.email }}</p>
-      </div>
+<div
+  class="bg-gradient-to-b from-[#2E5077] to-[#79D7BE] border-b-4 border-primary rounded-b-4xl sticky top-0 h-20 z-10 mb-10"
+>
+  <div
+    class="absolute left-1/2 -translate-x-1/2 -bottom-[43px] py-0 px-6 m-0 w-full max-w-4xl mx-auto flex items-center gap-4"
+  >
+    <img
+      [src]="
+        user
+          ? 'https://randomuser.me/api/portraits/men/' + user.id + '.jpg'
+          : 'assets/images/default-avatar.png'
+      "
+      (error)="onImageError($event)"
+      class="w-20 h-20 rounded-full border-4 border-primary"
+      alt="avatar"
+    />
+    <div>
+      <h2 class="text-4xl text-white font-bold mb-3">{{ user?.name }}</h2>
+      <p
+        class="text-white bg-[#79D7BE] w-fit p-2 rounded-b-2xl border-x-4 border-x-primary border-b-4 border-b-primary"
+      >
+        {{ user?.email }}
+      </p>
     </div>
   </div>
+</div>
 
-  <div class="max-w-4xl mx-auto p-6">
-    <h3 class="text-xl font-semibold mb-4">My Sharings</h3>
+<div class="max-w-4xl mx-auto p-6">
+  <h3
+    class="text-xl font-semibold bg-white rounded-t-4xl text-secondary font-layout shadow-lg p-4 border border-gray-200 border-b"
+  >
+    My Sharings
+  </h3>
 
-    @if (loading) {
-      <p class="text-gray-500">Loading posts...</p>
-    } @else if (posts.length > 0) {
-      <div class="space-y-6">
-        @for (post of posts; track post.id) {
-          <div class="">
-            <h4 class="text-lg font-bold mb-2">{{ post.title }}</h4>
-            <p class="text-gray-600 mb-2">{{ post.body }}</p>
-            <span class="text-sm text-gray-400">Post ID: {{ post.id }}</span>
-          </div>
-        }
-      </div>
-    } @else {
-      <p class="text-gray-500">You haven’t written any posts yet.</p>
-    }
-  </div>
+  @if (loading) {
+    <p class="text-gray-500">Loading posts...</p>
+  } @else if (posts.length > 0) {
+    <div class="space-y-6 h-100 overflow-y-auto no-scrollbar pb-4">
+      @for (post of posts; track post.id) {
+        <div
+          class="relative font-posts border-b pb-4 bg-white border border-gray-200 p-4 shadow border-t-4 border-t-secondary rounded-b-4xl"
+        >
+          <h4 class="text-lg font-bold mb-2 capitalize">{{ post.title }}</h4>
+          <p class="text-gray-600 mb-2">{{ post.body }}</p>
+
+          <button
+            class="absolute top-4 right-4 p-1 rounded hover:bg-gray-100"
+            (click)="toggleMenu(post.id)"
+          >
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+          </button>
+
+          @if (openMenuId === post.id) {
+            <div
+              class="absolute top-10 right-4 bg-white border border-gray-200 shadow-lg rounded-md w-28 z-20 flex flex-col"
+            >
+              <button
+                class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2"
+                (click)="onEditPost(post)"
+              >
+                <i class="fa-regular fa-pen-to-square"></i> Edit
+              </button>
+              <button
+                class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2 text-red-500"
+                (click)="onDeletePost(post)"
+              >
+                <i class="fa-solid fa-trash"></i> Delete
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  } @else {
+    <p class="text-gray-500">You haven’t written any posts yet.</p>
+  }
 </div>

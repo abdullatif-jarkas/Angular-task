@@ -20,6 +20,7 @@ export class Popular {
     this.postService.getPosts().subscribe((posts) => {
       this.popularPosts = this.postService.getMostLikedPosts(posts, 10);
       this.loading = false;
+      console.log(this.popularPosts)
     });
   }
 }

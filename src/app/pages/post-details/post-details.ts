@@ -6,6 +6,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommentItem } from '../../shared/components/comment-item/comment-item';
 import { NgClass } from '@angular/common';
 import { UserService } from '../../services/user/user';
+import { AuthService } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-post-details',
@@ -19,18 +20,17 @@ export class PostDetails implements OnInit {
   loading = signal(true);
   saved = signal(false);
 
-  // user info signals
   userName = signal<string | null>(null);
   userId = signal<number | null>(null);
   avatarUrl = signal<string>(this.getDefaultAvatar());
+  following = signal(false);
 
   route = inject(ActivatedRoute);
-  postService = inject(PostService);
-  userService = inject(UserService);
+  private postService = inject(PostService);
+  private userService = inject(UserService);
+  authService = inject(AuthService);
 
-  toggleBookmark = () => {
-    this.saved.update((prev) => !prev);
-  };
+  currentUserId: number | null = null;
 
   sharePost = () => {
     if (navigator.share) {
@@ -57,11 +57,14 @@ export class PostDetails implements OnInit {
         this.post.set(post);
         this.loading.set(false);
 
-        // بعد جلب البوست: جلب بيانات المستخدم حسب userId الموجود في البوست
+        const currentUserId = localStorage.getItem('id')!;
+        const userBookmarks = this.postService.getUserBookmarks(currentUserId);
+        this.saved.set(userBookmarks.includes(post.id));
+        this.loadBookmark();
+
         if (post?.userId) {
           this.fetchUserInfo(post.userId);
         } else {
-          // إعادة القيمة الافتراضية في حال لم يكن هناك userId
           this.userName.set(null);
           this.userId.set(null);
           this.avatarUrl.set(this.getDefaultAvatar());
@@ -69,6 +72,7 @@ export class PostDetails implements OnInit {
       });
 
       this.postService.getCommentsByPostId(postId).subscribe((data) => {
+        console.log('post: ', data);
         this.comments.set(data);
       });
 
@@ -78,20 +82,32 @@ export class PostDetails implements OnInit {
     });
   }
 
-  private fetchUserInfo(userId: number) {
-    this.userService.getUserById(userId).subscribe({
-      next: (user) => {
-        // UserService يرجع { id, name } حسب تعريفك
-        this.userName.set(user.name);
-        this.userId.set(user.id);
-        this.avatarUrl.set(this.userService.getAvatarUrl(user.id));
-      },
-      error: (err) => {
-        console.error('Failed to load user info', err);
-        this.userName.set(null);
-        this.userId.set(null);
-        this.avatarUrl.set(this.getDefaultAvatar());
-      },
+  loadBookmark() {
+    const userId = this.authService.getUserId();
+    if (!userId) return;
+
+    const userBookmarks = this.postService.getUserBookmarks(userId);
+    this.saved.set(userBookmarks.includes(this.post().id));
+  }
+  toggleBookmark = () => {
+    const userId = this.authService.getUserId();
+    if (!userId) return;
+
+    const bookmarked = this.postService.toggleBookmark(this.post().id, userId);
+    this.saved.set(bookmarked);
+  };
+  fetchUserInfo(userId: number) {
+    this.userService.getUserById(userId).subscribe((user) => {
+      this.userId.set(user.id);
+      this.userName.set(user.name);
+      this.avatarUrl.set(this.userService.getAvatarUrl(user.id));
+
+      const currentUser = this.authService.getUser();
+      if (currentUser?.id) {
+        this.following.set(
+          this.userService.isFollowing(user.id, Number(currentUser.id))
+        );
+      }
     });
   }
 
@@ -100,6 +116,16 @@ export class PostDetails implements OnInit {
   }
 
   private getDefaultAvatar() {
-    return 'assets/images/default-avatar.png';
+    return 'images/default-avatar.png';
+  }
+  toggleFollow() {
+    const currentUser = this.authService.getUser();
+    if (!currentUser?.id || !this.userId()) return;
+
+    const newState = this.userService.toggleFollow(
+      this.userId()!,
+      Number(currentUser.id)
+    );
+    this.following.set(newState);
   }
 }

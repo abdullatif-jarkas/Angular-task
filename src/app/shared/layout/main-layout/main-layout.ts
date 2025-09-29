@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Navbar } from '../../components/navbar/navbar';
 import { RouterOutlet } from '@angular/router';
 import { Sidebar } from '../../components/sidebar/sidebar';
@@ -13,6 +13,12 @@ import { NgClass } from '@angular/common';
 export class MainLayout {
   auth = inject(AuthService);
   showNews = true;
+
+  sidebarOpen = signal(false);
+
+  toggleSidebar() {
+    this.sidebarOpen.set(!this.sidebarOpen());
+  }
 
   closeNews() {
     this.showNews = false;

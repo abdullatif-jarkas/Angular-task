@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Post } from '../../models/post.type';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { Comment } from '../../models/comment.type';
 
 @Injectable({ providedIn: 'root' })
@@ -11,10 +11,21 @@ export class PostService {
   private readonly LIKES_KEY = 'post_likes';
   private readonly BOOKMARKS_KEY = 'post_bookmarks';
 
-  getPosts() {
-    return this.http
-      .get<Post[]>(this.apiUrl)
-      .pipe(map((posts) => this.shuffleArray(posts)));
+  getPosts(): Observable<(Post & { user: any })[]> {
+    return this.http.get<Post[]>(this.apiUrl).pipe(
+      switchMap((posts) =>
+        this.http.get<any[]>('https://jsonplaceholder.typicode.com/users').pipe(
+          map((users) => {
+            const merged = posts.map((post) => ({
+              ...post,
+              user: users.find((u) => u.id === post.userId),
+            }));
+            console.log(merged)
+            return this.shuffleArray(merged);
+          })
+        )
+      )
+    );
   }
 
   private shuffleArray<T>(array: T[]): T[] {
@@ -161,10 +172,10 @@ export class PostService {
     );
   };
 
-  updatePost(post: Post) {
-    return this.http.put(
-      `https://jsonplaceholder.typicode.com/posts/${post.id}`,
-      post
+  updatePost(id: number, data: Partial<Post>) {
+    return this.http.put<Post>(
+      `https://jsonplaceholder.typicode.com/posts/${id}`,
+      data
     );
   }
 }

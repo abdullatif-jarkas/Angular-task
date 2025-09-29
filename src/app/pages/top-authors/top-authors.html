@@ -1,5 +1,9 @@
 <div class="max-w-3xl mx-auto p-6">
-  <h2 class="text-2xl font-bold mb-6">🏆 Top Authors</h2>
+  <h2
+    class="text-2xl font-bold mb-6 text-white bg-secondary w-fit px-4 py-2 shadow rounded-4xl"
+  >
+    🏆 Top Authors
+  </h2>
 
   @if (loading) {
   <p>Loading authors...</p>
@@ -7,7 +11,7 @@
   <div class="space-y-4">
     @for (author of topAuthors; track author.id) {
     <div
-      class="p-4 border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4"
+      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4"
     >
       <img
         [src]="author.avatar"
@@ -16,7 +20,9 @@
       />
       <div>
         <a [routerLink]="['/users', author.id]">
-          <h3 class="font-semibold hover:text-secondary transition-colors">{{ author.name }}</h3>
+          <h3 class="font-semibold hover:text-secondary transition-colors">
+            {{ author.name }}
+          </h3>
         </a>
         <p class="text-sm text-gray-500">
           ❤️ {{ author.likes }} total likes · 📝 {{ author.posts.length }} posts

@@ -53,6 +53,11 @@ export const routes: Routes = [
         data: { roles: ['admin', 'user'] },
       },
       {
+        path: 'posts/edit/:id',
+        loadComponent: () =>
+          import('./pages/write-post/write-post').then((m) => m.WritePost),
+      },
+      {
         path: 'saved',
         loadComponent: () => import('./pages/saved/saved').then((m) => m.Saved),
         canActivate: [authGuard],
@@ -60,11 +65,13 @@ export const routes: Routes = [
       },
       {
         path: 'top-authors',
-        loadComponent: () => import('./pages/top-authors/top-authors').then((m) => m.TopAuthors),
+        loadComponent: () =>
+          import('./pages/top-authors/top-authors').then((m) => m.TopAuthors),
       },
       {
         path: 'popular',
-        loadComponent: () => import('./pages/popular/popular').then((m) => m.Popular),
+        loadComponent: () =>
+          import('./pages/popular/popular').then((m) => m.Popular),
       },
     ],
   },

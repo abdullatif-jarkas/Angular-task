@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth';
 
@@ -8,6 +8,8 @@ import { AuthService } from '../../../services/auth/auth';
   templateUrl: './navbar.html',
 })
 export class Navbar implements OnInit {
+  @Output() burgerClick = new EventEmitter<void>();
+
   isOpen = signal<boolean>(false);
   userAvatar: string = 'assets/images/default-avatar.png';
 
@@ -30,9 +32,9 @@ export class Navbar implements OnInit {
     (event.target as HTMLImageElement).src = 'assets/images/default-avatar.png';
   }
 
-  handleClick = () => {
-    this.isOpen.update((prev) => !prev);
-  };
+   handleClick() {
+    this.burgerClick.emit();
+  }
 
   handleClose = () => {
     this.isOpen.set(false);

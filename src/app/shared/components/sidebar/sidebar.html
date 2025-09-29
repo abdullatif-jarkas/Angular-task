@@ -24,7 +24,7 @@
       <ul class="flex flex-col gap-2">
         <li
           routerLink="/posts"
-          routerLinkActive="text-secondary font-bold border-l-2  border-l-secondary p-2"
+          routerLinkActive="text-secondary font-bold border-l-4  border-l-secondary p-2"
           [routerLinkActiveOptions]="{ exact: true }"
           class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
         >
@@ -36,7 +36,7 @@
         </li>
         <li
           routerLink="/top-authors"
-          routerLinkActive="text-secondary font-bold border-l-2  border-l-secondary p-2"
+          routerLinkActive="text-secondary font-bold border-l-4  border-l-secondary p-2"
           [routerLinkActiveOptions]="{ exact: true }"
           class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
         >
@@ -48,7 +48,7 @@
         </li>
         <li
           routerLink="/popular"
-          routerLinkActive="text-secondary font-bold border-l-2  border-l-secondary p-2"
+          routerLinkActive="text-secondary font-bold border-l-4  border-l-secondary p-2"
           [routerLinkActiveOptions]="{ exact: true }"
           class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
         >
@@ -63,7 +63,7 @@
     @if (auth.isLoggedIn()){
     <li
       routerLink="/profile"
-      routerLinkActive="text-secondary font-bold border-l-2  border-l-secondary p-2"
+      routerLinkActive="text-secondary font-bold border-l-4  border-l-secondary p-2"
       [routerLinkActiveOptions]="{ exact: true }"
       class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
     >
@@ -75,7 +75,7 @@
     </li>
     <li
       routerLink="/saved"
-      routerLinkActive="text-secondary font-bold border-l-2  border-l-secondary p-2"
+      routerLinkActive="text-secondary font-bold border-l-4  border-l-secondary p-2"
       [routerLinkActiveOptions]="{ exact: true }"
       class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
     >
@@ -108,6 +108,5 @@
         class="fa-brands fa-linkedin-in text-xl text-primary hover:text-secondary cursor-pointer"
       ></i
     ></a>
-    <!-- <a href="#" class="text-black hover:text-primary"><i class="fa-brands fa-behance text-xl text-secondary"></i></a> -->
   </div>
 </div>
