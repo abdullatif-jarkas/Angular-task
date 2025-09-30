@@ -29,6 +29,13 @@ export const routes: Routes = [
                 (m) => m.PostDetails
               ),
           },
+          {
+            path: 'edit/:id',
+            loadComponent: () =>
+              import('./pages/write-post/write-post').then((m) => m.WritePost),
+            canActivate: [authGuard],
+            data: { roles: ['admin', 'user'] },
+          },
         ],
       },
       {
@@ -51,11 +58,6 @@ export const routes: Routes = [
           import('./pages/write-post/write-post').then((m) => m.WritePost),
         canActivate: [authGuard],
         data: { roles: ['admin', 'user'] },
-      },
-      {
-        path: 'posts/edit/:id',
-        loadComponent: () =>
-          import('./pages/write-post/write-post').then((m) => m.WritePost),
       },
       {
         path: 'saved',

@@ -45,14 +45,9 @@ export class PostService {
     return this.http.get<Post>(`${this.apiUrl}/${postId}`);
   }
 
-  getMostLikedPosts(
-    allPosts: Post[],
-    limit: number = 10
-  ): { post: Post; likes: number }[] {
+  getMostLikedPosts( allPosts: Post[], limit: number = 10 ): { post: Post; likes: number }[] {
     const stored = localStorage.getItem(this.LIKES_KEY);
-    const likes: { postId: number; userId: string }[] = stored
-      ? JSON.parse(stored)
-      : [];
+    const likes: { postId: number; userId: string }[] = stored? JSON.parse(stored) : [];
 
     const likeCountMap: Record<number, number> = {};
     likes.forEach((like) => {
@@ -153,12 +148,6 @@ export class PostService {
   getCommentsByPostId(postId: number): Observable<Comment[]> {
     return this.http.get<Comment[]>(
       `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
-    );
-  }
-
-  getSuggestedPosts(postId: number): Observable<Post[]> {
-    return this.getPosts().pipe(
-      map((posts) => posts.filter((post) => post.id !== postId).slice(0, 3))
     );
   }
 

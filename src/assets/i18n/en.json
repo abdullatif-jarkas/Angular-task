@@ -70,5 +70,14 @@
   },
   "COMMENTS": {
     "MIN_AGO": "min ago"
+  },
+  "MARQUEE": {
+    "TEXT": "🚀 Sign up today to write, comment, and join the conversation! ✨ | 📖 Discover inspiring stories shared by our community | 💬 Connect with others and make your voice heard!"
+  },
+  "NAV": {
+    "LOGIN": "Login",
+    "SIGNUP": "Sign Up",
+    "LOGOUT": "Logout",
+    "WRITE": "Write a Post"
   }
 }

@@ -74,16 +74,4 @@ export class UserService {
     const map = this.loadFollowersMap();
     return (map[targetUserId] || []).length;
   }
-
-  getFollowers(targetUserId: number): number[] {
-    const map = this.loadFollowersMap();
-    return map[targetUserId] || [];
-  }
-
-  getFollowersDetailed(targetUserId: number) {
-    return this.getFollowers(targetUserId).map((id) => ({
-      id,
-      avatar: this.getAvatarUrl(id),
-    }));
-  }
 }

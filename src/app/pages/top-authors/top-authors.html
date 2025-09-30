@@ -7,42 +7,54 @@
   </h2>
 
   @if (loading) {
-  <p>{{ "TOP_AUTHORS.LOADING" | translate }}</p>
-  } @else { @if (topAuthors.length > 0) {
-  <div class="space-y-4">
-    @for (author of topAuthors; track author.id) {
-    <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4"
-      [ngClass]="{
-        'flex-row-reverse text-right': translate.currentLang === 'ar'
-      }"
-    >
-      <img
-        [src]="author.avatar"
-        [alt]="author.name"
-        class="w-12 h-12 rounded-full"
-        [ngClass]="{
-          'ml-4': translate.currentLang === 'ar'
-        }"
-      />
-      <div>
-        <a [routerLink]="['/users', author.id]">
-          <h3 class="font-semibold hover:text-secondary transition-colors">
-            {{ author.name }}
-          </h3>
-        </a>
-        <p
-          class="text-sm text-gray-500"
-          [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
-        >
-          {{ "TOP_AUTHORS.LIKES" | translate : { likes: author.likes } }} ·
-          {{ "TOP_AUTHORS.POSTS" | translate : { posts: author.posts.length } }}
-        </p>
+    @for (_ of [1,2,3,4]; track _) {
+      <div
+        class="p-4 my-4 bg-white border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4 animate-pulse"
+      >
+        <div class="w-12 h-12 rounded-full bg-gray-200"></div>
+
+        <div class="flex-1 space-y-2">
+          <div class="h-4 bg-gray-200 rounded w-1/3"></div>
+          <div class="h-3 bg-gray-200 rounded w-2/3"></div>
+        </div>
       </div>
-    </div>
     }
-  </div>
   } @else {
-  <p class="text-gray-500">{{ "TOP_AUTHORS.NO_AUTHORS" | translate }}</p>
-  } }
+    @if (topAuthors.length > 0) {
+      <div class="space-y-4">
+        @for (author of topAuthors; track author.id) {
+          <div
+            class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4"
+            [ngClass]="{
+              'flex-row-reverse text-right': translate.currentLang === 'ar'
+            }"
+          >
+            <img
+              [src]="author.avatar"
+              [alt]="author.name"
+              class="w-12 h-12 rounded-full"
+              [ngClass]="{ 'ml-4': translate.currentLang === 'ar' }"
+            />
+            <div>
+              <a [routerLink]="['/users', author.id]">
+                <h3 class="font-semibold hover:text-secondary transition-colors">
+                  {{ author.name }}
+                </h3>
+              </a>
+              <p
+                class="text-sm text-gray-500"
+                [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
+              >
+                {{ "TOP_AUTHORS.LIKES" | translate : { likes: author.likes } }}
+                ·
+                {{ "TOP_AUTHORS.POSTS" | translate : { posts: author.posts.length } }}
+              </p>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <p class="text-gray-500">{{ "TOP_AUTHORS.NO_AUTHORS" | translate }}</p>
+    }
+  }
 </div>

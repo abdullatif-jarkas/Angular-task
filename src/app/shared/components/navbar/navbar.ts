@@ -8,11 +8,12 @@ import {
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink],
+  imports: [RouterLink, TranslatePipe, NgClass],
   templateUrl: './navbar.html',
 })
 export class Navbar implements OnInit {

@@ -1,20 +1,22 @@
-<div
-  class="max-w-3xl mx-auto p-6 flex flex-col"
->
+<div class="max-w-3xl mx-auto p-6 flex flex-col">
   <h2
     class="text-2xl font-bold mb-6 text-white bg-secondary w-fit px-4 py-2 shadow rounded-4xl"
     [ngClass]="{ 'arabic-font self-end': translate.currentLang === 'ar' }"
     [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'"
-    
   >
     {{ "POPULAR.POSTS_TITLE" | translate }}
   </h2>
 
-  @if (loading) {
-  <p [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }">
-    {{ "POPULAR.LOADING" | translate }}
-  </p>
-  } @else { @if (popularPosts.length > 0) {
+  @if (loading) { @for (_ of [1,2,3]; track _) {
+  <div
+    class="flex flex-col gap-2 animate-pulse my-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm"
+  >
+    <div class="h-20 bg-gray-200 rounded"></div>
+    <div class="h-5 bg-gray-200 rounded w-3/4"></div>
+    <div class="h-4 bg-gray-200 rounded w-2/4"></div>
+    <div class="h-3 bg-gray-200 rounded w-1/4 mt-2"></div>
+  </div>
+  } } @else { @if (popularPosts.length > 0) {
   <div class="space-y-4">
     @for (item of popularPosts; track item.post.id) {
     <div class="">

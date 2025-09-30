@@ -1,5 +1,5 @@
 <div
-  class="flex flex-col-reverse md:flex-row px-5 mx-auto p-6 bg-white border-x border-x-gray-200"
+  class="font-layout flex flex-col-reverse md:flex-row px-5 mx-auto p-6 bg-white border-x border-x-gray-200"
 >
   <div class="w-full md:pl-7">
     @if (loading()) {
@@ -7,7 +7,7 @@
       <div class="h-10 bg-gray-200 rounded w-3/4 mb-4"></div>
     </div>
     } @else {
-    <h2 class="text-4xl md:text-6xl font-bold mb-6 capitalize">
+    <h2 class="font-posts text-4xl md:text-6xl font-bold mb-6 capitalize">
       {{ post().title }}
     </h2>
     }

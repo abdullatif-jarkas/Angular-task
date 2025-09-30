@@ -17,7 +17,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 export class PostDetails implements OnInit {
   post = signal<Post>({} as Post);
   comments = signal<Comment[]>([]);
-  suggestedPosts = signal<Post[]>([]);
   loading = signal(true);
   saved = signal(false);
 
@@ -77,10 +76,6 @@ export class PostDetails implements OnInit {
         console.log('post: ', data);
         this.comments.set(data);
       });
-
-      this.postService.getSuggestedPosts(postId).subscribe((suggested) => {
-        this.suggestedPosts.set(suggested);
-      });
     });
   }
 
@@ -98,6 +93,7 @@ export class PostDetails implements OnInit {
     const bookmarked = this.postService.toggleBookmark(this.post().id, userId);
     this.saved.set(bookmarked);
   };
+
   fetchUserInfo(userId: number) {
     this.userService.getUserById(userId).subscribe((user) => {
       this.userId.set(user.id);
@@ -120,6 +116,7 @@ export class PostDetails implements OnInit {
   private getDefaultAvatar() {
     return 'images/default-avatar.png';
   }
+  
   toggleFollow() {
     const currentUser = this.authService.getUser();
     if (!currentUser?.id || !this.userId()) return;
