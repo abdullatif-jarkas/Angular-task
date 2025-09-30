@@ -77,7 +77,6 @@
   "NAV": {
     "LOGIN": "Login",
     "SIGNUP": "Sign Up",
-    "LOGOUT": "Logout",
     "WRITE": "Write a Post"
   }
 }
