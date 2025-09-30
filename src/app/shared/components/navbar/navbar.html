@@ -15,6 +15,13 @@
     </div>
 
     <div class="auth-buttons flex items-center gap-1 sm:gap-4">
+      <button (click)="toggleLang()" class="cursor-pointer">
+        <img
+          [src]="currentFlag"
+          alt="language flag"
+          class="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-gray-300"
+        />
+      </button>
       @if (!auth.isLoggedIn()) {
       <a
         routerLink="/auth/login"
@@ -65,14 +72,7 @@
       >
         <i class="fa-solid fa-arrow-right-from-bracket text-primary"></i>
       </button>
-    }
-    <button (click)="toggleLang()" class="cursor-pointer">
-      <img
-        [src]="currentFlag"
-        alt="language flag"
-        class="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-gray-300"
-      />
-    </button>
+      }
     </div>
   </div>
 </nav>

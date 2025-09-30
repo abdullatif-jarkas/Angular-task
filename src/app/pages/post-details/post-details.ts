@@ -7,10 +7,11 @@ import { CommentItem } from '../../shared/components/comment-item/comment-item';
 import { NgClass } from '@angular/common';
 import { UserService } from '../../services/user/user';
 import { AuthService } from '../../services/auth/auth';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-post-details',
-  imports: [CommentItem, NgClass, RouterLink],
+  imports: [CommentItem, NgClass, RouterLink, TranslatePipe],
   templateUrl: './post-details.html',
 })
 export class PostDetails implements OnInit {
@@ -29,6 +30,7 @@ export class PostDetails implements OnInit {
   private postService = inject(PostService);
   private userService = inject(UserService);
   authService = inject(AuthService);
+  translate = inject(TranslateService);
 
   currentUserId: number | null = null;
 

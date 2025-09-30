@@ -2,102 +2,107 @@
   class="bg-gradient-to-b from-[#2E5077] to-[#79D7BE] border-b-4 border-primary rounded-b-4xl sticky top-0 h-20 z-10 mb-10"
 >
   <div
-    class="absolute font-layout left-1/2 -translate-x-1/2 -bottom-11 py-0 px-6 m-0 w-full max-w-4xl mx-auto flex items-start gap-4"
+    class="absolute font-layout left-1/2 -translate-x-1/2 -bottom-14 py-0 px-6 m-0 w-full max-w-4xl mx-auto flex items-center gap-6"
   >
     <img
       [src]="user().avatar"
       alt="avatar"
-      class="w-20 h-20 rounded-full border-4 border-primary"
+      class="w-24 h-24 rounded-full border-4 border-primary"
     />
-    <div class="flex flex-col items-start gap-3">
-      <h2 class="text-4xl text-white font-bold -mt-3">{{ user().name }}</h2>
-      <button
-        class="flex items-center gap-2 w-fit px-4 py-1 border-4 cursor-pointer rounded-4xl text-white shadow transition-all"
-        [ngClass]="
-          isFollowing()
-            ? 'bg-red-500 hover:bg-red-600'
-            : 'bg-secondary hover:bg-secondary'
-        "
-        (click)="toggleFollow()"
-      >
-        <i
-          class="fa-solid"
-          [ngClass]="isFollowing() ? 'fa-user-minus' : 'fa-user-plus'"
-        ></i>
-        {{ isFollowing() ? ('PROFILE.UNFOLLOW' | translate) : ('PROFILE.FOLLOW' | translate) }}
-      </button>
+
+    <div class="flex flex-col items-start gap-3 flex-1">
+      <h2 class="text-4xl text-white font-bold -mt-1">{{ user().name }}</h2>
+
+      <div class="flex items-center gap-4">
+        <button
+          class="flex items-center gap-2 px-4 py-1 border-4 cursor-pointer rounded-4xl text-white shadow transition-all"
+          [ngClass]="
+            isFollowing()
+              ? 'bg-red-500 hover:bg-red-600'
+              : 'bg-secondary hover:bg-secondary'
+          "
+          (click)="toggleFollow()"
+        >
+          <i
+            class="fa-solid"
+            [ngClass]="isFollowing() ? 'fa-user-minus' : 'fa-user-plus'"
+          ></i>
+          <span [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }">
+            {{
+              isFollowing()
+                ? ("PROFILE.UNFOLLOW" | translate)
+                : ("PROFILE.FOLLOW" | translate)
+            }}
+          </span>
+        </button>
+
+        <div
+          class="flex items-center gap-2 border-4 bg-secondary bg-opacity-20 px-3 py-1 rounded-full text-white font-medium shadow"
+        >
+          <i class="fa-solid fa-users"></i>
+          <span [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }">
+            {{ followersCount() }} {{ "PROFILE.FOLLOWERS_COUNT" | translate }}
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="max-w-4xl mx-auto p-6">
   @if (user()) {
-    <div>
-      <h3
-        class="text-xl font-semibold bg-white rounded-t-4xl text-secondary font-layout shadow-lg p-4 border border-gray-200 border-b"
+  <div>
+    <h3
+      class="text-xl font-semibold bg-white rounded-t-4xl text-secondary font-layout shadow-lg p-4 border border-gray-200 border-b"
+      [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
+    >
+      {{ "PROFILE.SHARINGS_TITLE" | translate }}
+    </h3>
+
+    @if (loading()) {
+    <p>{{ "PROFILE.LOADING_POSTS" | translate }}</p>
+    } @else {
+    <div class="space-y-6 h-100 overflow-y-auto no-scrollbar pb-4">
+      @for (post of posts(); track post.id) {
+      <div
+        class="border p-4 rounded bg-white border-gray-200 shadow border-t-4 border-t-secondary rounded-b-4xl relative"
       >
-        {{ 'PROFILE.SHARINGS_TITLE' | translate }}
-      </h3>
+        <h4 class="font-bold text-lg mb-1">{{ post.title }}</h4>
+        <p class="text-gray-600">{{ post.body }}</p>
 
-      @if (loading()) {
-        <p>{{ 'PROFILE.LOADING_POSTS' | translate }}</p>
-      } @else {
-        <div class="space-y-6 h-100 overflow-y-auto no-scrollbar pb-4">
-          @for (post of posts(); track post.id) {
-            <div
-              class="border p-4 rounded bg-white border-gray-200 shadow border-t-4 border-t-secondary rounded-b-4xl relative"
-            >
-              <h4 class="font-bold text-lg mb-1">{{ post.title }}</h4>
-              <p class="text-gray-600">{{ post.body }}</p>
+        @if (currentUserId === post.userId || authService.userRole() ===
+        'admin') {
+        <button
+          class="absolute top-4 right-4 p-1 rounded hover:bg-gray-100"
+          (click)="toggleMenu(post.id)"
+        >
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
 
-              @if (currentUserId === post.userId || authService.userRole() === 'admin') {
-                <button
-                  class="absolute top-4 right-4 p-1 rounded hover:bg-gray-100"
-                  (click)="toggleMenu(post.id)"
-                >
-                  <i class="fa-solid fa-ellipsis-vertical"></i>
-                </button>
-
-                @if (openMenuId === post.id) {
-                  <div
-                    class="absolute top-10 right-4 bg-white border border-gray-200 shadow-lg rounded-md w-28 z-20 flex flex-col"
-                  >
-                    <button
-                      class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2"
-                      (click)="onEditPost(post)"
-                    >
-                      <i class="fa-regular fa-pen-to-square"></i> {{ 'PROFILE.EDIT' | translate }}
-                    </button>
-                    <button
-                      class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2 text-red-500"
-                      (click)="onDeletePost(post)"
-                    >
-                      <i class="fa-solid fa-trash"></i> {{ 'PROFILE.DELETE' | translate }}
-                    </button>
-                  </div>
-                }
-              }
-            </div>
-          }
+        @if (openMenuId === post.id) {
+        <div
+          class="absolute top-10 right-4 bg-white border border-gray-200 shadow-lg rounded-md w-28 z-20 flex flex-col"
+          [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
+        >
+          <button
+            class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2"
+            (click)="onEditPost(post)"
+          >
+            <i class="fa-regular fa-pen-to-square"></i>
+            {{ "PROFILE.EDIT" | translate }}
+          </button>
+          <button
+            class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2 text-red-500"
+            (click)="onDeletePost(post)"
+          >
+            <i class="fa-solid fa-trash"></i> {{ "PROFILE.DELETE" | translate }}
+          </button>
         </div>
+        } }
+      </div>
       }
     </div>
-
-    <div class="mt-10">
-      <h3
-        class="text-xl font-semibold bg-white rounded-t-4xl text-secondary font-layout shadow-lg p-4 border border-gray-200 border-b"
-      >
-        {{ 'PROFILE.FOLLOWERS_TITLE' | translate }}
-      </h3>
-
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 bg-white rounded-b-4xl shadow">
-        @for (f of followers(); track f.id) {
-          <div class="flex items-center gap-3 border p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <img [src]="f.avatar" alt="follower" class="w-12 h-12 rounded-full border" />
-            <span class="font-medium text-gray-700">{{ f.name }}</span>
-          </div>
-        }
-      </div>
-    </div>
+    }
+  </div>
   }
 </div>

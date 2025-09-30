@@ -11,7 +11,11 @@
       {{ post().title }}
     </h2>
     }
-    <div class="flex items-center gap-3 mb-4">
+
+    <div
+      class="flex items-center gap-3 mb-4"
+      [ngClass]="{ 'flex-row-reverse': translate.currentLang === 'ar' }"
+    >
       @if (userId() !== null) {
       <img
         [src]="avatarUrl()"
@@ -23,7 +27,12 @@
       }
 
       <div>
-        <p class="text-sm text-gray-400">Post by</p>
+        <p
+          class="text-sm text-gray-400"
+          [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
+        >
+          {{ "POST_DETAILS.POST_BY" | translate }}
+        </p>
         @if (userName()) {
         <p
           class="font-semibold cursor-pointer"
@@ -32,7 +41,12 @@
           {{ userName() }}
         </p>
         } @else {
-        <p class="text-gray-500">Unknown author</p>
+        <p
+          class="text-gray-500"
+          [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
+        >
+          {{ "POST_DETAILS.UNKNOWN_AUTHOR" | translate }}
+        </p>
         }
       </div>
     </div>
@@ -54,7 +68,11 @@
           class="fa-bookmark cursor-pointer hover:text-secondary transition-all duration-300 active:scale-125"
           [ngClass]="saved() ? 'fa-solid' : 'fa-regular'"
           (click)="toggleBookmark()"
-          [title]="saved() ? 'Unsave' : 'Save'"
+          [title]="
+            saved()
+              ? ('POST_DETAILS.UNSAVE' | translate)
+              : ('POST_DETAILS.SAVE' | translate)
+          "
         ></i>
         <i
           class="cursor-pointer hover:text-secondary transition-colors"
@@ -63,14 +81,18 @@
               ? 'fa-solid fa-user-minus text-red-500'
               : 'fa-solid fa-user-plus'
           "
-          title="{{ following() ? 'Unfollow' : 'Follow' }}"
+          [title]="
+            following()
+              ? ('POST_DETAILS.UNFOLLOW' | translate)
+              : ('POST_DETAILS.FOLLOW' | translate)
+          "
           (click)="toggleFollow()"
         ></i>
         }
         <i
           class="fa-regular fa-share-from-square cursor-pointer hover:text-secondary transition-colors"
           (click)="sharePost()"
-          title="share"
+          [title]="'POST_DETAILS.SHARE' | translate"
         ></i>
       </div>
     </div>
@@ -84,7 +106,12 @@
     <p class="text-xl text-gray-700">{{ post().body }}</p>
     }
 
-    <h3 class="my-8 text-xl font-semibold">Comments</h3>
+    <h3
+      class="my-8 text-xl font-semibold"
+      [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
+    >
+      {{ "POST_DETAILS.COMMENTS" | translate }}
+    </h3>
     <div class="comments-section mt-4 mb-15">
       @if (loading()) {
       <div class="space-y-4 animate-pulse">

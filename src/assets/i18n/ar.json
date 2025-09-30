@@ -51,10 +51,24 @@
   "PROFILE": {
     "FOLLOW": "متابعة",
     "UNFOLLOW": "إلغاء المتابعة",
-    "SHARINGS_TITLE": "مشاركاتي",
+    "SHARINGS_TITLE": "المشاركات",
     "LOADING_POSTS": "جاري تحميل المنشورات...",
     "EDIT": "تعديل",
     "DELETE": "حذف",
-    "FOLLOWERS_TITLE": "المتابعون"
+    "FOLLOWERS_TITLE": "المتابعون",
+    "FOLLOWERS_COUNT": "متابعين"
+  },
+  "POST_DETAILS": {
+    "POST_BY": "منشور بواسطة",
+    "UNKNOWN_AUTHOR": "كاتب غير معروف",
+    "SAVE": "حفظ",
+    "UNSAVE": "إلغاء الحفظ",
+    "FOLLOW": "متابعة",
+    "UNFOLLOW": "إلغاء المتابعة",
+    "SHARE": "مشاركة",
+    "COMMENTS": "التعليقات"
+  },
+  "COMMENTS": {
+    "MIN_AGO": "دقيقة مضت"
   }
 }

@@ -55,6 +55,20 @@
     "LOADING_POSTS": "Loading posts...",
     "EDIT": "Edit",
     "DELETE": "Delete",
-    "FOLLOWERS_TITLE": "Followers"
+    "FOLLOWERS_TITLE": "Followers",
+    "FOLLOWERS_COUNT": "followers"
+  },
+  "POST_DETAILS": {
+    "POST_BY": "Post by",
+    "UNKNOWN_AUTHOR": "Unknown author",
+    "SAVE": "Save",
+    "UNSAVE": "Unsave",
+    "FOLLOW": "Follow",
+    "UNFOLLOW": "Unfollow",
+    "SHARE": "Share",
+    "COMMENTS": "Comments"
+  },
+  "COMMENTS": {
+    "MIN_AGO": "min ago"
   }
 }

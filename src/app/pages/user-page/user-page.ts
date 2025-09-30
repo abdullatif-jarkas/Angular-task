@@ -25,7 +25,6 @@ export class UserPage implements OnInit {
 
   user = signal<any>(null);
   posts = signal<Post[]>([]);
-  followers = signal<any[]>([]);
   isFollowing = signal(false);
   followersCount = signal(0);
   loading = signal(true);
@@ -57,7 +56,6 @@ export class UserPage implements OnInit {
       }
 
       this.followersCount.set(this.userService.getFollowersCount(u.id));
-      this.followers.set(this.userService.getFollowersDetailed(u.id));
     });
   }
 
@@ -78,7 +76,6 @@ export class UserPage implements OnInit {
 
     this.isFollowing.set(updatedStatus);
     this.followersCount.set(this.userService.getFollowersCount(this.user().id));
-    this.followers.set(this.userService.getFollowersDetailed(this.user().id));
   }
 
   onEditPost(post: Post) {
@@ -92,7 +89,6 @@ export class UserPage implements OnInit {
       alert('You do not have permission to edit this post.');
     }
   }
-
 
   toggleMenu(postId: number) {
     this.openMenuId = this.openMenuId === postId ? null : postId;
