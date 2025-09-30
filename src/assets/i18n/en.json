@@ -1,0 +1,60 @@
+{
+  "SIDEBAR": {
+    "GET_STARTED": "Get Started",
+    "SEARCH_PLACEHOLDER": "Search",
+    "NAV": {
+      "FEED": "Feed",
+      "TOP_AUTHORS": "Top Authors",
+      "POPULAR": "Popular",
+      "PROFILE": "Profile",
+      "SAVED": "Saved"
+    },
+    "SOCIAL": {
+      "FACEBOOK": "Facebook",
+      "TWITTER": "Twitter",
+      "INSTAGRAM": "Instagram",
+      "LINKEDIN": "LinkedIn"
+    }
+  },
+  "POST": {
+    "EDIT_TITLE": "Edit your post",
+    "SHARE_TITLE": "Share your thoughts",
+    "TITLE_PLACEHOLDER": "Enter post title",
+    "BODY_PLACEHOLDER": "Write your post here...",
+    "UPDATE": "Update",
+    "PUBLISH": "Publish"
+  },
+  "TOP_AUTHORS": {
+    "TITLE": "🏆 Top Authors",
+    "LOADING": "Loading authors...",
+    "LIKES": "❤️ {{likes}} total likes",
+    "POSTS": "📝 {{posts}} posts",
+    "NO_AUTHORS": "No authors found."
+  },
+  "POPULAR": {
+    "POSTS_TITLE": "🔥 Most Liked Posts",
+    "LOADING": "Loading posts...",
+    "LIKES": "❤️ {{likes}} likes",
+    "NO_POSTS": "No popular posts yet."
+  },
+  "MY_SHARINGS": {
+    "TITLE": "My Sharings",
+    "LOADING": "Loading posts...",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "NO_POSTS": "You haven’t written any posts yet."
+  },
+  "SAVED_POSTS": {
+    "TITLE": "Saved Posts",
+    "NO_POSTS": "No saved posts yet."
+  },
+  "PROFILE": {
+    "FOLLOW": "Follow",
+    "UNFOLLOW": "Unfollow",
+    "SHARINGS_TITLE": "Sharings",
+    "LOADING_POSTS": "Loading posts...",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "FOLLOWERS_TITLE": "Followers"
+  }
+}

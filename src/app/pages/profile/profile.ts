@@ -5,11 +5,12 @@ import { AuthService } from '../../services/auth/auth';
 import { Post } from '../../models/post.type';
 import { Router } from '@angular/router';
 import { PostService } from '../../services/post/post';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './profile.html',
 })
 export class Profile implements OnInit {
@@ -17,6 +18,7 @@ export class Profile implements OnInit {
   private http = inject(HttpClient);
   private postService = inject(PostService);
   private router = inject(Router);
+  translate = inject(TranslateService)
 
   user: any = null;
   posts: Post[] = [];

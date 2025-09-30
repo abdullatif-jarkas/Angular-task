@@ -1,21 +1,24 @@
-<div class="sidebar font-layout flex flex-col justify-between h-full">
+<div
+  class="sidebar font-layout flex flex-col justify-between h-full"
+  [ngClass]="{'arabic-font': translate.currentLang === 'ar'}"
+>
   <div class="main p-4">
     @if (!auth.isLoggedIn()) {
     <a
       routerLink="/auth/login"
       class="rounded-sm px-2 block text-center w-full py-1 bg-primary hover:bg-secondary hover:rounded-4xl transition-all text-white cursor-pointer"
     >
-      Get Started
+      {{ "SIDEBAR.GET_STARTED" | translate }}
     </a>
     }
 
     <div
       class="search flex items-center p-2 border border-gray-200 rounded-4xl my-4 focus-within:ring-2 focus-within:ring-secondary transition-all"
     >
-      <i class="fa-solid fa-magnifying-glass mr-2 text-gray-300"></i>
+      <i class="fa-solid fa-magnifying-glass mx-2 text-gray-300"></i>
       <input
         type="text"
-        placeholder="Search"
+        [placeholder]="'SIDEBAR.SEARCH_PLACEHOLDER' | translate"
         class="w-full placeholder:text-gray-400 placeholder:text-sm focus:outline-none"
       />
     </div>
@@ -29,10 +32,12 @@
           class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
         >
           <i
-            class="fa-regular fa-house mr-2 text-xl"
+            class="fa-regular fa-house mx-2 text-xl"
             routerLinkActive="fa-solid"
           ></i>
-          <span class="block py-2 transition-colors cursor-pointer">Feed</span>
+          <span class="block py-2 transition-colors cursor-pointer">{{
+            "SIDEBAR.NAV.FEED" | translate
+          }}</span>
         </li>
         <li
           routerLink="/top-authors"
@@ -41,10 +46,12 @@
           class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
         >
           <i
-            class="fa-regular fa-star mr-2 text-xl"
+            class="fa-regular fa-star mx-2 text-xl"
             routerLinkActive="fa-solid"
           ></i>
-          <span class="block py-2 transition-colors">Top Authors</span>
+          <span class="block py-2 transition-colors">{{
+            "SIDEBAR.NAV.TOP_AUTHORS" | translate
+          }}</span>
         </li>
         <li
           routerLink="/popular"
@@ -53,10 +60,12 @@
           class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
         >
           <i
-            class="fa-regular fa-heart mr-2 text-xl"
+            class="fa-regular fa-heart mx-2 text-xl"
             routerLinkActive="fa-solid"
           ></i>
-          <span class="block py-2 transition-colors">Popular</span>
+          <span class="block py-2 transition-colors">{{
+            "SIDEBAR.NAV.POPULAR" | translate
+          }}</span>
         </li>
       </ul>
     </div>
@@ -68,10 +77,12 @@
       class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
     >
       <i
-        class="fa-regular fa-user mr-2 text-xl"
+        class="fa-regular fa-user mx-2 text-xl"
         routerLinkActive="fa-solid"
       ></i>
-      <span class="block py-2 transition-colors">Profile</span>
+      <span class="block py-2 transition-colors">{{
+        "SIDEBAR.NAV.PROFILE" | translate
+      }}</span>
     </li>
     <li
       routerLink="/saved"
@@ -80,10 +91,12 @@
       class="flex items-center text-gray-400 hover:text-secondary cursor-pointer transition-all"
     >
       <i
-        class="fa-regular fa-bookmark mr-2 text-xl"
+        class="fa-regular fa-bookmark mx-2 text-xl"
         routerLinkActive="fa-solid"
       ></i>
-      <span class="block py-2 transition-colors">Saved</span>
+      <span class="block py-2 transition-colors">{{
+        "SIDEBAR.NAV.SAVED" | translate
+      }}</span>
     </li>
     }
   </div>

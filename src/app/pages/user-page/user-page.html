@@ -24,7 +24,7 @@
           class="fa-solid"
           [ngClass]="isFollowing() ? 'fa-user-minus' : 'fa-user-plus'"
         ></i>
-        {{ isFollowing() ? "Unfollow" : "Follow" }}
+        {{ isFollowing() ? ('PROFILE.UNFOLLOW' | translate) : ('PROFILE.FOLLOW' | translate) }}
       </button>
     </div>
   </div>
@@ -32,82 +32,72 @@
 
 <div class="max-w-4xl mx-auto p-6">
   @if (user()) {
-
-  <div>
-    <h3
-      class="text-xl font-semibold bg-white rounded-t-4xl text-secondary font-layout shadow-lg p-4 border border-gray-200 border-b"
-    >
-      Sharings
-    </h3>
-
-    @if (loading()) {
-    <p>Loading posts...</p>
-    } @else {
-    <div class="space-y-6 h-100 overflow-y-auto no-scrollbar pb-4">
-      @for (post of posts(); track post.id) {
-      <div
-        class="border p-4 rounded bg-white border-gray-200 shadow border-t-4 border-t-secondary rounded-b-4xl relative"
+    <div>
+      <h3
+        class="text-xl font-semibold bg-white rounded-t-4xl text-secondary font-layout shadow-lg p-4 border border-gray-200 border-b"
       >
-        <h4 class="font-bold text-lg mb-1">{{ post.title }}</h4>
-        <p class="text-gray-600">{{ post.body }}</p>
+        {{ 'PROFILE.SHARINGS_TITLE' | translate }}
+      </h3>
 
-        @if (currentUserId === post.userId || authService.userRole() ===
-        'admin') {
-        <button
-          class="absolute top-4 right-4 p-1 rounded hover:bg-gray-100"
-          (click)="toggleMenu(post.id)"
-        >
-          <i class="fa-solid fa-ellipsis-vertical"></i>
-        </button>
+      @if (loading()) {
+        <p>{{ 'PROFILE.LOADING_POSTS' | translate }}</p>
+      } @else {
+        <div class="space-y-6 h-100 overflow-y-auto no-scrollbar pb-4">
+          @for (post of posts(); track post.id) {
+            <div
+              class="border p-4 rounded bg-white border-gray-200 shadow border-t-4 border-t-secondary rounded-b-4xl relative"
+            >
+              <h4 class="font-bold text-lg mb-1">{{ post.title }}</h4>
+              <p class="text-gray-600">{{ post.body }}</p>
 
-        @if (openMenuId === post.id) {
-        <div
-          class="absolute top-10 right-4 bg-white border border-gray-200 shadow-lg rounded-md w-28 z-20 flex flex-col"
-        >
-          <button
-            class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2"
-            (click)="onEditPost(post)"
-          >
-            <i class="fa-regular fa-pen-to-square"></i> Edit
-          </button>
-          <button
-            class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2 text-red-500"
-            (click)="onDeletePost(post)"
-          >
-            <i class="fa-solid fa-trash"></i> Delete
-          </button>
+              @if (currentUserId === post.userId || authService.userRole() === 'admin') {
+                <button
+                  class="absolute top-4 right-4 p-1 rounded hover:bg-gray-100"
+                  (click)="toggleMenu(post.id)"
+                >
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+
+                @if (openMenuId === post.id) {
+                  <div
+                    class="absolute top-10 right-4 bg-white border border-gray-200 shadow-lg rounded-md w-28 z-20 flex flex-col"
+                  >
+                    <button
+                      class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2"
+                      (click)="onEditPost(post)"
+                    >
+                      <i class="fa-regular fa-pen-to-square"></i> {{ 'PROFILE.EDIT' | translate }}
+                    </button>
+                    <button
+                      class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2 text-red-500"
+                      (click)="onDeletePost(post)"
+                    >
+                      <i class="fa-solid fa-trash"></i> {{ 'PROFILE.DELETE' | translate }}
+                    </button>
+                  </div>
+                }
+              }
+            </div>
+          }
         </div>
-        } }
-      </div>
       }
     </div>
 
-    }
-  </div>
-
-  <div class="mt-10">
-    <h3
-      class="text-xl font-semibold bg-white rounded-t-4xl text-secondary font-layout shadow-lg p-4 border border-gray-200 border-b"
-    >
-      Followers
-    </h3>
-
-    <div
-      class="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 bg-white rounded-b-4xl shadow"
-    >
-      @for (f of followers(); track f.id) {
-      <div
-        class="flex items-center gap-3 border p-2 rounded-lg hover:bg-gray-50 cursor-pointer"
+    <div class="mt-10">
+      <h3
+        class="text-xl font-semibold bg-white rounded-t-4xl text-secondary font-layout shadow-lg p-4 border border-gray-200 border-b"
       >
-        <img
-          [src]="f.avatar"
-          alt="follower"
-          class="w-12 h-12 rounded-full border"
-        />
-        <span class="font-medium text-gray-700">{{ f.name }}</span>
+        {{ 'PROFILE.FOLLOWERS_TITLE' | translate }}
+      </h3>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 bg-white rounded-b-4xl shadow">
+        @for (f of followers(); track f.id) {
+          <div class="flex items-center gap-3 border p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <img [src]="f.avatar" alt="follower" class="w-12 h-12 rounded-full border" />
+            <span class="font-medium text-gray-700">{{ f.name }}</span>
+          </div>
+        }
       </div>
-      }
     </div>
-  </div>
   }
 </div>

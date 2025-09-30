@@ -28,50 +28,54 @@
 <div class="max-w-4xl mx-auto p-6">
   <h3
     class="text-xl font-semibold bg-white rounded-t-4xl text-secondary font-layout shadow-lg p-4 border border-gray-200 border-b"
+    [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
   >
-    My Sharings
+    {{ "MY_SHARINGS.TITLE" | translate }}
   </h3>
 
   @if (loading) {
-    <p class="text-gray-500">Loading posts...</p>
+  <p class="text-gray-500">{{ "MY_SHARINGS.LOADING" | translate }}</p>
   } @else if (posts.length > 0) {
-    <div class="space-y-6 h-100 overflow-y-auto no-scrollbar pb-4">
-      @for (post of posts; track post.id) {
-        <div
-          class="relative font-posts border-b pb-4 bg-white border border-gray-200 p-4 shadow border-t-4 border-t-secondary rounded-b-4xl"
+  <div class="space-y-6 h-100 overflow-y-auto no-scrollbar pb-4">
+    @for (post of posts; track post.id) {
+    <div
+      class="relative font-posts border-b pb-4 bg-white border border-gray-200 p-4 shadow border-t-4 border-t-secondary rounded-b-4xl"
+    >
+      <h4 class="text-lg font-bold mb-2 capitalize">{{ post.title }}</h4>
+      <p class="text-gray-600 mb-2">{{ post.body }}</p>
+
+      <button
+        class="absolute top-4 right-4 p-1 rounded hover:bg-gray-100"
+        (click)="toggleMenu(post.id)"
+      >
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </button>
+
+      @if (openMenuId === post.id) {
+      <div
+        class="absolute top-10 right-4 bg-white border border-gray-200 shadow-lg rounded-md w-28 z-20 flex flex-col"
+        [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
+      >
+        <button
+          class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2"
+          (click)="onEditPost(post)"
         >
-          <h4 class="text-lg font-bold mb-2 capitalize">{{ post.title }}</h4>
-          <p class="text-gray-600 mb-2">{{ post.body }}</p>
-
-          <button
-            class="absolute top-4 right-4 p-1 rounded hover:bg-gray-100"
-            (click)="toggleMenu(post.id)"
-          >
-            <i class="fa-solid fa-ellipsis-vertical"></i>
-          </button>
-
-          @if (openMenuId === post.id) {
-            <div
-              class="absolute top-10 right-4 bg-white border border-gray-200 shadow-lg rounded-md w-28 z-20 flex flex-col"
-            >
-              <button
-                class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2"
-                (click)="onEditPost(post)"
-              >
-                <i class="fa-regular fa-pen-to-square"></i> Edit
-              </button>
-              <button
-                class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2 text-red-500"
-                (click)="onDeletePost(post)"
-              >
-                <i class="fa-solid fa-trash"></i> Delete
-              </button>
-            </div>
-          }
-        </div>
+          <i class="fa-regular fa-pen-to-square"></i>
+          {{ "MY_SHARINGS.EDIT" | translate }}
+        </button>
+        <button
+          class="px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2 text-red-500"
+          (click)="onDeletePost(post)"
+        >
+          <i class="fa-solid fa-trash"></i>
+          {{ "MY_SHARINGS.DELETE" | translate }}
+        </button>
+      </div>
       }
     </div>
+    }
+  </div>
   } @else {
-    <p class="text-gray-500">You haven’t written any posts yet.</p>
+  <p class="text-gray-500">{{ "MY_SHARINGS.NO_POSTS" | translate }}</p>
   }
 </div>

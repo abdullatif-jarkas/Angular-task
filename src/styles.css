@@ -2,7 +2,7 @@
 
 @theme {
   --color-primary: #232020;
-  --color-secondary: #79d7be;
+  --color-secondary: #02c39a;
   --font-layout: Poppins, sans-serif;
   --font-posts: Merriweather, sans-serif;
   --font-news: "Roboto Condensed", sans-serif;
@@ -16,6 +16,11 @@ body {
 
 h1 {
   font-family: "Playfair Display", sans-serif;
+}
+
+.arabic-font {
+  font-family: 'Tajawal', sans-serif;
+  direction: rtl; 
 }
 
 .no-scrollbar::-webkit-scrollbar {

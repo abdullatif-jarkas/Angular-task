@@ -7,7 +7,17 @@
     <app-sidebar></app-sidebar>
   </section>
 
-  <div class="w-full lg:w-8/10 flex transition-all">
+  <div class="w-full lg:w-8/10 flex transition-all relative">
+    <div
+      class="absolute inset-0 bg-black z-5 transition-opacity duration-300 lg:hidden"
+      [ngClass]="
+        sidebarOpen()
+          ? 'opacity-50 pointer-events-auto'
+          : 'opacity-0 pointer-events-none'
+      "
+      (click)="toggleSidebar()"
+    ></div>
+
     <section
       class="content w-10/10 relative"
       style="background-image: url('/images/background.png')"
@@ -34,6 +44,5 @@
         <router-outlet />
       </div>
     </section>
-    <!-- <section class="w-2/10 border-l border-l-gray-200"></section> -->
   </div>
 </div>

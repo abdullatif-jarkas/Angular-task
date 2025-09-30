@@ -1,20 +1,39 @@
-<div class="max-w-3xl mx-auto p-6">
-  <h2 class="text-2xl font-bold mb-6 text-white bg-secondary w-fit px-4 py-2 shadow rounded-4xl">🔥 Most Liked Posts</h2>
+<div
+  class="max-w-3xl mx-auto p-6 flex flex-col"
+>
+  <h2
+    class="text-2xl font-bold mb-6 text-white bg-secondary w-fit px-4 py-2 shadow rounded-4xl"
+    [ngClass]="{ 'arabic-font self-end': translate.currentLang === 'ar' }"
+    [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'"
+    
+  >
+    {{ "POPULAR.POSTS_TITLE" | translate }}
+  </h2>
 
   @if (loading) {
-    <p>Loading posts...</p>
-  } @else {
-    @if (popularPosts.length > 0) {
-      <div class="space-y-4">
-        @for (item of popularPosts; track item.post.id) {
-          <div class="">
-            <app-post-item [post]="item.post" [user]="item.post.user"></app-post-item>
-            <p class="text-sm text-gray-500 mt-1">❤️ {{ item.likes }} likes</p>
-          </div>
-        }
-      </div>
-    } @else {
-      <p class="text-gray-500">No popular posts yet.</p>
+  <p [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }">
+    {{ "POPULAR.LOADING" | translate }}
+  </p>
+  } @else { @if (popularPosts.length > 0) {
+  <div class="space-y-4">
+    @for (item of popularPosts; track item.post.id) {
+    <div class="">
+      <app-post-item [post]="item.post" [user]="item.post.user"></app-post-item>
+      <p
+        class="text-sm text-gray-500 mt-1"
+        [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
+      >
+        {{ "POPULAR.LIKES" | translate : { likes: item.likes } }}
+      </p>
+    </div>
     }
-  }
+  </div>
+  } @else {
+  <p
+    class="text-gray-500"
+    [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
+  >
+    {{ "POPULAR.NO_POSTS" | translate }}
+  </p>
+  } }
 </div>

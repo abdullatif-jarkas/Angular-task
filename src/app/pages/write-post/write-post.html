@@ -1,14 +1,19 @@
 <div
   class="flex flex-col max-w-4xl mx-auto h-full font-posts bg-white border-x border-x-gray-200"
+  [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
 >
   @if (editing) {
   <div class="border-b border-b-gray-200 flex items-center gap-2 p-6">
-    <h2 class="text-2xl font-extrabold text-primary">Edit your post</h2>
+    <h2 class="text-2xl font-extrabold text-primary">
+      {{ "POST.EDIT_TITLE" | translate }}
+    </h2>
     <i class="fa-solid fa-pen-to-square"></i>
   </div>
   } @else {
   <div class="border-b border-b-gray-200 flex items-center gap-2 p-6">
-    <h2 class="text-2xl font-extrabold text-primary">Share your thoughts</h2>
+    <h2 class="text-2xl font-extrabold text-primary">
+      {{ "POST.SHARE_TITLE" | translate }}
+    </h2>
     <img
       width="20"
       height="20"
@@ -27,7 +32,7 @@
       type="text"
       [(ngModel)]="title"
       name="title"
-      placeholder="Enter post title"
+      placeholder="{{ 'POST.TITLE_PLACEHOLDER' | translate }}"
       required
       class="py-2 w-full text-2xl font-bold text-primary placeholder:text-2xl placeholder:text-gray-400 outline-0 mb-10"
     />
@@ -35,7 +40,7 @@
     <textarea
       [(ngModel)]="body"
       name="body"
-      placeholder="Write your post here..."
+      placeholder="{{ 'POST.BODY_PLACEHOLDER' | translate }}"
       rows="6"
       required
       class="py-2 w-full text-2xl text-primary grow resize-none placeholder:text-2xl placeholder:text-gray-400 outline-0"
@@ -45,8 +50,13 @@
       <button
         type="submit"
         class="bg-white border-2 border-secondary text-secondary hover:bg-secondary hover:text-white outline-0 transition-all font-layout cursor-pointer font-semibold py-1 px-4 rounded-4xl"
+        [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
       >
-        @if (editing) { Update } @else { Publish }
+        @if (editing) {
+        {{ "POST.UPDATE" | translate }}
+        } @else {
+        {{ "POST.PUBLISH" | translate }}
+        }
       </button>
     </div>
   </form>

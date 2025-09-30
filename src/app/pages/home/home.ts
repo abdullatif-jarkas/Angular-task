@@ -13,6 +13,7 @@ export class Home implements OnInit {
   UserService = inject(UserService);
   posts = signal<Post[]>([]);
   loading = signal(true);
+  
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe((posts) => {
@@ -34,7 +35,7 @@ export class Home implements OnInit {
         });
       });
 
-      this.loading.set(false)
+      this.loading.set(false);
     });
   }
 }

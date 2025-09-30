@@ -1,6 +1,14 @@
-import { Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  OnInit,
+  Output,
+  signal,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +19,10 @@ export class Navbar implements OnInit {
   @Output() burgerClick = new EventEmitter<void>();
 
   isOpen = signal<boolean>(false);
+  translate = inject(TranslateService);
+
   userAvatar: string = 'assets/images/default-avatar.png';
+  currentFlag = 'flags/en.png';
 
   auth = inject(AuthService);
   router = inject(Router);
@@ -32,11 +43,22 @@ export class Navbar implements OnInit {
     (event.target as HTMLImageElement).src = 'assets/images/default-avatar.png';
   }
 
-   handleClick() {
+  handleClick() {
     this.burgerClick.emit();
   }
 
   handleClose = () => {
     this.isOpen.set(false);
   };
+
+  toggleLang() {
+    const current = this.translate.currentLang;
+    if (current === 'en') {
+      this.translate.use('ar');
+      this.currentFlag = 'flags/ar.png';
+    } else {
+      this.translate.use('en');
+      this.currentFlag = 'flags/en.png';
+    }
+  }
 }

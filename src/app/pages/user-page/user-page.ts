@@ -6,11 +6,12 @@ import { UserService } from '../../services/user/user';
 import { PostService } from '../../services/post/post';
 import { AuthService } from '../../services/auth/auth';
 import { Post } from '../../models/post.type';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-page',
   standalone: true,
-  imports: [CommonModule, NgClass],
+  imports: [CommonModule, NgClass, TranslatePipe],
   templateUrl: './user-page.html',
   styleUrls: ['./user-page.css'],
 })
@@ -20,6 +21,7 @@ export class UserPage implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   authService = inject(AuthService);
+  translate = inject(TranslateService);
 
   user = signal<any>(null);
   posts = signal<Post[]>([]);

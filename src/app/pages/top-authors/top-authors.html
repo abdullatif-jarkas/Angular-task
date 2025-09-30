@@ -1,22 +1,29 @@
-<div class="max-w-3xl mx-auto p-6">
+<div class="max-w-3xl mx-auto p-6 flex flex-col">
   <h2
     class="text-2xl font-bold mb-6 text-white bg-secondary w-fit px-4 py-2 shadow rounded-4xl"
+    [ngClass]="{ 'arabic-font self-end': translate.currentLang === 'ar' }"
   >
-    🏆 Top Authors
+    {{ "TOP_AUTHORS.TITLE" | translate }}
   </h2>
 
   @if (loading) {
-  <p>Loading authors...</p>
+  <p>{{ "TOP_AUTHORS.LOADING" | translate }}</p>
   } @else { @if (topAuthors.length > 0) {
   <div class="space-y-4">
     @for (author of topAuthors; track author.id) {
     <div
       class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4"
+      [ngClass]="{
+        'flex-row-reverse text-right': translate.currentLang === 'ar'
+      }"
     >
       <img
         [src]="author.avatar"
         [alt]="author.name"
         class="w-12 h-12 rounded-full"
+        [ngClass]="{
+          'ml-4': translate.currentLang === 'ar'
+        }"
       />
       <div>
         <a [routerLink]="['/users', author.id]">
@@ -24,14 +31,18 @@
             {{ author.name }}
           </h3>
         </a>
-        <p class="text-sm text-gray-500">
-          ❤️ {{ author.likes }} total likes · 📝 {{ author.posts.length }} posts
+        <p
+          class="text-sm text-gray-500"
+          [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
+        >
+          {{ "TOP_AUTHORS.LIKES" | translate : { likes: author.likes } }} ·
+          {{ "TOP_AUTHORS.POSTS" | translate : { posts: author.posts.length } }}
         </p>
       </div>
     </div>
     }
   </div>
   } @else {
-  <p class="text-gray-500">No authors found.</p>
+  <p class="text-gray-500">{{ "TOP_AUTHORS.NO_AUTHORS" | translate }}</p>
   } }
 </div>

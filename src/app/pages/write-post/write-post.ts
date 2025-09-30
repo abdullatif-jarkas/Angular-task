@@ -6,11 +6,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth/auth';
 import { ToastrService } from 'ngx-toastr';
 import { Post } from '../../models/post.type';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-write-post',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TranslatePipe],
   templateUrl: './write-post.html',
   styleUrl: './write-post.css',
 })
@@ -20,6 +21,7 @@ export class WritePost implements OnInit {
   private authService = inject(AuthService);
   private toastr = inject(ToastrService);
   private route = inject(ActivatedRoute);
+  translate = inject(TranslateService);  
 
   title: string = '';
   body: string = '';
