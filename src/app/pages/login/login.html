@@ -1,122 +1,96 @@
-<div class="flex flex-col lg:flex-row h-screen">
-  <div
-    class="lg:w-1/2 h-full bg-gradient-to-b from-secondary to-[#2E5077] text-white flex flex-col justify-between p-10"
-  >
-    <div>
-      <h1 class="hidden lg:block text-5xl font-bold leading-snug">
-        Start Your <br />
-        Journey <br />
-        with Us
-      </h1>
+<img src="shared-logo.png" class="max-w-60 mx-auto mb-4 lg:hidden" alt="logo" />
+<h2 class="text-2xl font-bold mb-2 font-layout">Welcome Back</h2>
+<p class="text-gray-500 mb-6">Sign in to your account</p>
+
+<form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+  <div class="mb-4">
+    <label class="block text-sm mb-1">Email</label>
+    <div
+      class="flex items-center rounded px-3 border"
+      [ngClass]="
+        emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)
+          ? 'border-red-500'
+          : 'border-gray-300'
+      "
+    >
+      <i class="fa-regular fa-envelope text-gray-400"></i>
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        required
+        email
+        placeholder="shared@gmail.com"
+        #emailCtrl="ngModel"
+        class="w-full p-2 outline-none placeholder:text-gray-400 font-thin"
+      />
     </div>
-    <div class="hidden lg:flex items-center gap-3 text-sm opacity-80">
-      <img src="shared-logo.png" alt="logo" class="w-[70%]" />
-      <p class="w-[30%] max-w-[120px]">Share your thoughts, explore new ideas, and connect through blogs.</p>
-    </div>
+    @if (emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)) {
+    <p class="text-red-500 text-sm mt-1">
+      @if (emailCtrl.errors?.['required']) {
+      <span>Email is required.</span>
+      } @if (emailCtrl.errors?.['email']) {
+      <span>Invalid email format.</span>
+      }
+    </p>
+    }
   </div>
 
-  <div
-    class="absolute bg-white rounded-xl lg:static inset-5 lg:w-1/2 flex items-center justify-center"
-  >
-  <div class="w-3/4 max-w-md">
-      <img src="shared-logo.png" class="max-w-60 mx-auto mb-4 lg:hidden" alt="logo" />
-      <h2 class="text-2xl font-bold mb-2 font-layout">Welcome Back</h2>
-      <p class="text-gray-500 mb-6">Sign in to your account</p>
-
-      <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
-        <div class="mb-4">
-          <label class="block text-sm mb-1">Email</label>
-          <div
-            class="flex items-center rounded px-3 border"
-            [ngClass]="
-              emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)
-                ? 'border-red-500'
-                : 'border-gray-300'
-            "
-          >
-            <i class="fa-regular fa-envelope text-gray-400"></i>
-            <input
-              type="email"
-              [(ngModel)]="email"
-              name="email"
-              required
-              email
-              placeholder="shared@gmail.com"
-              #emailCtrl="ngModel"
-              class="w-full p-2 outline-none placeholder:text-gray-400 font-thin"
-            />
-          </div>
-          @if (emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)) {
-          <p class="text-red-500 text-sm mt-1">
-            @if (emailCtrl.errors?.['required']) {
-            <span>Email is required.</span>
-            } @if (emailCtrl.errors?.['email']) {
-            <span>Invalid email format.</span>
-            }
-          </p>
-          }
-        </div>
-
-        <div class="mb-4">
-          <label class="block text-sm mb-1">Password</label>
-          <div
-            class="flex items-center rounded px-3 border"
-            [ngClass]="
-              passwordCtrl.invalid &&
-              (passwordCtrl.dirty || passwordCtrl.touched)
-                ? 'border-red-500'
-                : 'border-gray-300'
-            "
-          >
-            <i class="fa-solid fa-lock text-gray-400"></i>
-            <input
-              type="password"
-              [(ngModel)]="password"
-              name="password"
-              required
-              minlength="8"
-              placeholder="Enter your password"
-              #passwordCtrl="ngModel"
-              class="w-full p-2 outline-none placeholder:text-gray-400 font-thin"
-            />
-            <i class="fa-regular fa-eye text-gray-400 cursor-pointer"></i>
-          </div>
-          @if (passwordCtrl.invalid && (passwordCtrl.dirty ||
-          passwordCtrl.touched)) {
-          <p class="text-red-500 text-sm mt-1">
-            @if (passwordCtrl.errors?.['required']) {
-            <span>Password is required.</span>
-            } @if (passwordCtrl.errors?.['minlength']) {
-            <span>Password must be at least 6 characters.</span>
-            }
-          </p>
-          }
-        </div>
-
-        <div class="flex items-center justify-between mb-6 text-sm">
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" class="accent-primary" />
-            Remember me
-          </label>
-        </div>
-
-        <button
-          type="submit"
-          [disabled]="loginForm.invalid"
-          class="w-full bg-primary text-white py-2 rounded hover:bg-secondary transition disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Sign in
-        </button>
-      </form>
-
-      <p class="mt-6 text-center text-sm text-gray-500">
-        Don’t have an account?
-        <a
-          routerLink="/auth/signup"
-          class="text-primary font-medium hover:underline cursor-pointer"
-          >Sign up</a
-        >
-      </p>
+  <div class="mb-4">
+    <label class="block text-sm mb-1">Password</label>
+    <div
+      class="flex items-center rounded px-3 border"
+      [ngClass]="
+        passwordCtrl.invalid && (passwordCtrl.dirty || passwordCtrl.touched)
+          ? 'border-red-500'
+          : 'border-gray-300'
+      "
+    >
+      <i class="fa-solid fa-lock text-gray-400"></i>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        name="password"
+        required
+        minlength="8"
+        placeholder="Enter your password"
+        #passwordCtrl="ngModel"
+        class="w-full p-2 outline-none placeholder:text-gray-400 font-thin"
+      />
+      <i class="fa-regular fa-eye text-gray-400 cursor-pointer"></i>
     </div>
+    @if (passwordCtrl.invalid && (passwordCtrl.dirty || passwordCtrl.touched)) {
+    <p class="text-red-500 text-sm mt-1">
+      @if (passwordCtrl.errors?.['required']) {
+      <span>Password is required.</span>
+      } @if (passwordCtrl.errors?.['minlength']) {
+      <span>Password must be at least 6 characters.</span>
+      }
+    </p>
+    }
   </div>
-</div>
+
+  <div class="flex items-center justify-between mb-6 text-sm">
+    <label class="flex items-center gap-2 cursor-pointer">
+      <input type="checkbox" class="accent-primary" />
+      Remember me
+    </label>
+  </div>
+
+  <button
+    type="submit"
+    [disabled]="loginForm.invalid"
+    class="w-full bg-primary text-white py-2 rounded hover:bg-secondary transition disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    Sign in
+  </button>
+</form>
+
+<p class="mt-6 text-center text-sm text-gray-500">
+  Don’t have an account?
+  <a
+    routerLink="/auth/signup"
+    class="text-primary font-medium hover:underline cursor-pointer"
+    >Sign up</a
+  >
+</p>
