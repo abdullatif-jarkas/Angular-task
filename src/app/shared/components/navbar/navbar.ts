@@ -3,6 +3,7 @@ import {
   EventEmitter,
   inject,
   OnInit,
+  output,
   Output,
   signal,
 } from '@angular/core';
@@ -17,7 +18,7 @@ import { NgClass } from '@angular/common';
   templateUrl: './navbar.html',
 })
 export class Navbar implements OnInit {
-  @Output() burgerClick = new EventEmitter<void>();
+  burgerClick = output<void>();
 
   isOpen = signal<boolean>(false);
   translate = inject(TranslateService);

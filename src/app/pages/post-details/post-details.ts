@@ -73,7 +73,6 @@ export class PostDetails implements OnInit {
       });
 
       this.postService.getCommentsByPostId(postId).subscribe((data) => {
-        console.log('post: ', data);
         this.comments.set(data);
       });
     });
@@ -116,7 +115,7 @@ export class PostDetails implements OnInit {
   private getDefaultAvatar() {
     return 'images/default-avatar.png';
   }
-  
+
   toggleFollow() {
     const currentUser = this.authService.getUser();
     if (!currentUser?.id || !this.userId()) return;

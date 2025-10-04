@@ -84,7 +84,7 @@ export class UserPage implements OnInit {
       this.authService.userRole() === 'admin';
 
     if (canEdit) {
-      this.router.navigate([`/posts/edit/${post.id}`], { state: { post } });
+      this.router.navigate([`/posts/edit/${post.id}`]);
     } else {
       alert('You do not have permission to edit this post.');
     }

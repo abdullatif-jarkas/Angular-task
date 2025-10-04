@@ -3,24 +3,24 @@
 >
   <div class="flex items-start gap-4">
     <img
-      [src]="'https://i.pravatar.cc/40?u=' + commentItem.email"
+      [src]="'https://i.pravatar.cc/40?u=' + commentItem().email"
       alt="avatar"
       class="w-12 h-12 rounded-full border border-gray-300"
     />
 
     <div class="flex-1">
       <div class="flex items-center justify-between mb-1">
-        <h4 class="font-bold text-gray-800">{{ commentItem.name }}</h4>
+        <h4 class="font-bold text-gray-800">{{ commentItem().name }}</h4>
         <span
           class="text-xs text-gray-400"
           [ngClass]="{ 'arabic-font': translate.currentLang === 'ar' }"
         >
-          {{ commentItem.id + commentItem.postId }}
+          {{ commentItem().id + commentItem().postId }}
           {{ "COMMENTS.MIN_AGO" | translate }}
         </span>
       </div>
-      <p class="text-sm text-gray-500 mb-1">{{ commentItem.email }}</p>
-      <p class="text-gray-700 leading-6">{{ commentItem.body }}</p>
+      <p class="text-sm text-gray-500 mb-1">{{ commentItem().email }}</p>
+      <p class="text-gray-700 leading-6">{{ commentItem().body }}</p>
     </div>
   </div>
 </div>

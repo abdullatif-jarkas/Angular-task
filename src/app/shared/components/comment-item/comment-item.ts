@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, input, Input } from '@angular/core';
 import { Comment } from '../../../models/comment.type';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
@@ -9,7 +9,7 @@ import { NgClass } from '@angular/common';
   templateUrl: './comment-item.html',
 })
 export class CommentItem {
-  @Input() commentItem!: Comment;
+  commentItem = input.required<Comment>();
 
   translate = inject(TranslateService)
 }

@@ -1,30 +1,51 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Post } from '../../models/post.type';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, switchMap } from 'rxjs';
+import { forkJoin, map, Observable, of, tap } from 'rxjs';
 import { Comment } from '../../models/comment.type';
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
-  private readonly apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+  private readonly postsUrl = 'https://jsonplaceholder.typicode.com/posts';
+  private readonly usersUrl = 'https://jsonplaceholder.typicode.com/users';
   private readonly http = inject(HttpClient);
   private readonly LIKES_KEY = 'post_likes';
   private readonly BOOKMARKS_KEY = 'post_bookmarks';
 
-  getPosts(): Observable<(Post & { user: any })[]> {
-    return this.http.get<Post[]>(this.apiUrl).pipe(
-      switchMap((posts) =>
-        this.http.get<any[]>('https://jsonplaceholder.typicode.com/users').pipe(
-          map((users) => {
-            const merged = posts.map((post) => ({
-              ...post,
-              user: users.find((u) => u.id === post.userId),
-            }));
-            console.log(merged)
-            return this.shuffleArray(merged);
-          })
-        )
-      )
+  posts = signal<Post[] | null>(null);
+  users = signal<any[] | null>(null);
+
+  getPosts(): Observable<Post[]> {
+    const cached = this.posts();
+    if (cached) {
+      return of(cached);
+    }
+
+    return this.http
+      .get<Post[]>(this.postsUrl)
+      .pipe(tap((posts) => this.posts.set(posts)));
+  }
+
+  getUsers(): Observable<any[]> {
+    const cached = this.users();
+    if (cached) {
+      return of(cached);
+    }
+
+    return this.http
+      .get<any[]>(this.usersUrl)
+      .pipe(tap((users) => this.users.set(users)));
+  }
+
+  getPostsWithUsers(): Observable<(Post & { user: any })[]> {
+    return forkJoin([this.getPosts(), this.getUsers()]).pipe(
+      map(([posts, users]) => {
+        const merged = posts.map((post) => ({
+          ...post,
+          user: users.find((u) => u.id === post.userId),
+        }));
+        return this.shuffleArray(merged); // 🔹 هنا نعمل shuffle
+      })
     );
   }
 
@@ -38,16 +59,21 @@ export class PostService {
   }
 
   getPostsByUserId(userId: number) {
-    return this.http.get<Post[]>(`${this.apiUrl}?userId=${userId}`);
+    return this.http.get<Post[]>(`${this.postsUrl}?userId=${userId}`);
   }
 
   getPostById(postId: number): Observable<Post> {
-    return this.http.get<Post>(`${this.apiUrl}/${postId}`);
+    return this.http.get<Post>(`${this.postsUrl}/${postId}`);
   }
 
-  getMostLikedPosts( allPosts: Post[], limit: number = 10 ): { post: Post; likes: number }[] {
+  getMostLikedPosts(
+    allPosts: (Post & { user?: any })[],
+    limit: number = 10
+  ): { post: Post & { user: any }; likes: number }[] {
     const stored = localStorage.getItem(this.LIKES_KEY);
-    const likes: { postId: number; userId: string }[] = stored? JSON.parse(stored) : [];
+    const likes: { postId: number; userId: string }[] = stored
+      ? JSON.parse(stored)
+      : [];
 
     const likeCountMap: Record<number, number> = {};
     likes.forEach((like) => {
@@ -55,7 +81,7 @@ export class PostService {
     });
 
     const withLikes = allPosts.map((post) => ({
-      post,
+      post: { ...post, user: post.user! }, // نضمن أن user موجود
       likes: likeCountMap[post.id] || 0,
     }));
 
@@ -80,6 +106,7 @@ export class PostService {
       number,
       { userId: number; likes: number; posts: Post[] }
     > = {};
+
     posts.forEach((post) => {
       const postLikes = likeCountMap[post.id] || 0;
       if (!authorMap[post.userId]) {
@@ -127,11 +154,11 @@ export class PostService {
     if (index > -1) {
       bookmarks.splice(index, 1);
       this.saveBookmarks(bookmarks);
-      return false; // unbookmarked
+      return false;
     } else {
       bookmarks.push({ postId, userId });
       this.saveBookmarks(bookmarks);
-      return true; // bookmarked
+      return true;
     }
   }
 
@@ -142,7 +169,7 @@ export class PostService {
   }
 
   getCommentsCount(postId: number) {
-    return this.http.get<any[]>(`${this.apiUrl}/${postId}/comments`);
+    return this.http.get<any[]>(`${this.postsUrl}/${postId}/comments`);
   }
 
   getCommentsByPostId(postId: number): Observable<Comment[]> {
@@ -152,7 +179,7 @@ export class PostService {
   }
 
   createPost(post: Post): Observable<Post> {
-    return this.http.post<Post>(this.apiUrl, post);
+    return this.http.post<Post>(this.postsUrl, post);
   }
 
   deletePost = (postId: number) => {

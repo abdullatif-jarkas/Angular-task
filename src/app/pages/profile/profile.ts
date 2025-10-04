@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth/auth';
 import { Post } from '../../models/post.type';
@@ -10,7 +10,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [NgClass, TranslatePipe],
   templateUrl: './profile.html',
 })
 export class Profile implements OnInit {
@@ -18,7 +18,7 @@ export class Profile implements OnInit {
   private http = inject(HttpClient);
   private postService = inject(PostService);
   private router = inject(Router);
-  translate = inject(TranslateService)
+  translate = inject(TranslateService);
 
   user: any = null;
   posts: Post[] = [];
@@ -30,20 +30,16 @@ export class Profile implements OnInit {
     this.user = this.auth.getUser();
 
     if (this.user) {
-      this.http
-        .get<Post[]>(
-          `https://jsonplaceholder.typicode.com/posts?userId=${this.user.id}`
-        )
-        .subscribe({
-          next: (data) => {
-            this.posts = data;
-            this.loading = false;
-          },
-          error: (err) => {
-            console.error('Error fetching posts', err);
-            this.loading = false;
-          },
-        });
+      this.postService.getPostsByUserId(this.user.id).subscribe({
+        next: (data) => {
+          this.posts = data;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Error fetching posts', err);
+          this.loading = false;
+        },
+      });
     } else {
       this.loading = false;
     }
@@ -65,7 +61,6 @@ export class Profile implements OnInit {
     if (confirm('Are you sure you want to delete this post?')) {
       this.postService.deletePost(post.id).subscribe({
         next: () => {
-          this.posts = this.posts.filter((p) => p.id !== post.id);
           alert('Post deleted successfully');
         },
         error: (err) => {

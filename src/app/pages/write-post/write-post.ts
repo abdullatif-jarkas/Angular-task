@@ -13,7 +13,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
   standalone: true,
   imports: [FormsModule, CommonModule, TranslatePipe],
   templateUrl: './write-post.html',
-  styleUrl: './write-post.css',
 })
 export class WritePost implements OnInit {
   private postService = inject(PostService);
@@ -21,7 +20,7 @@ export class WritePost implements OnInit {
   private authService = inject(AuthService);
   private toastr = inject(ToastrService);
   private route = inject(ActivatedRoute);
-  translate = inject(TranslateService);  
+  translate = inject(TranslateService);
 
   title: string = '';
   body: string = '';
@@ -83,7 +82,10 @@ export class WritePost implements OnInit {
           this.router.navigate(['/']);
         },
         error: () => {
-          this.toastr.error('Something went wrong while creating the post', 'Error');
+          this.toastr.error(
+            'Something went wrong while creating the post',
+            'Error'
+          );
         },
       });
     }

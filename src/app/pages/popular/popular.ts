@@ -16,14 +16,20 @@ export class Popular {
   private postService = inject(PostService);
   translate = inject(TranslateService);
 
-  popularPosts: { post: Post; likes: number }[] = [];
+  popularPosts: { post: Post & { user: any }; likes: number }[] = [];
   loading = true;
 
   ngOnInit() {
-    this.postService.getPosts().subscribe((posts) => {
-      this.popularPosts = this.postService.getMostLikedPosts(posts, 10);
-      this.loading = false;
-      console.log(this.popularPosts)
+    this.postService.getPostsWithUsers().subscribe({
+      next: (posts) => {
+        this.popularPosts = this.postService.getMostLikedPosts(posts, 10);
+        this.loading = false;
+        console.log(this.popularPosts);
+      },
+      error: (err) => {
+        console.error('Failed to load popular posts', err);
+        this.loading = false;
+      },
     });
   }
 }
