@@ -46,7 +46,9 @@ export class Profile implements OnInit {
   }
 
   onEditPost(post: Post) {
-    this.router.navigate(['/posts/edit', post.id]);
+    this.router.navigate(['/posts/edit', post.id], {
+      state: { post },
+    });
   }
 
   onImageError(event: Event) {

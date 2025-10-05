@@ -27,20 +27,35 @@ export class WritePost implements OnInit {
   editing = false;
   postId?: number;
 
-  ngOnInit(): void {
-    this.postId = Number(this.route.snapshot.paramMap.get('id'));
-    if (this.postId) {
+  constructor() {
+    const router = inject(Router);
+    const nav = router.getCurrentNavigation();
+    const post = nav?.extras?.state?.['post'] as Post | undefined;
+
+    if (post) {
       this.editing = true;
-      this.postService.getPostById(this.postId).subscribe({
-        next: (post: Post) => {
-          this.title = post.title;
-          this.body = post.body;
-        },
-        error: () => {
-          this.toastr.error('Failed to load post data', 'Error');
-          this.router.navigate(['/']);
-        },
-      });
+      this.postId = post.id;
+      this.title = post.title;
+      this.body = post.body;
+    }
+  }
+
+  ngOnInit(): void {
+    if (!this.postId) {
+      this.postId = Number(this.route.snapshot.paramMap.get('id'));
+      if (this.postId) {
+        this.editing = true;
+        this.postService.getPostById(this.postId).subscribe({
+          next: (data: Post) => {
+            this.title = data.title;
+            this.body = data.body;
+          },
+          error: () => {
+            this.toastr.error('Failed to load post data', 'Error');
+            this.router.navigate(['/']);
+          },
+        });
+      }
     }
   }
 

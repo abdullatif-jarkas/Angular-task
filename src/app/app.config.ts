@@ -25,12 +25,12 @@ export const appConfig: ApplicationConfig = {
       preventDuplicates: true,
     }),
     provideTranslateService({
-      lang: 'en',               // اللغة الافتراضية
-      fallbackLang: 'ar',       // لغة احتياطية إذا لم توجد ترجمة
+      lang: 'en',
+      fallbackLang: 'ar',
       loader: provideTranslateHttpLoader({
-        prefix: './../assets/i18n/',  // مسار مجلد ملفات الترجمة
-        suffix: '.json'           // لاحقة ملفات الترجمة
-      })
-    })
+        prefix: './../assets/i18n/',
+        suffix: '.json',
+      }),
+    }),
   ],
 };

@@ -11,7 +11,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
   standalone: true,
   imports: [CommonModule, PostItem, TranslatePipe],
   templateUrl: './saved.html',
-  styleUrl: './saved.css',
 })
 export class Saved implements OnInit {
   private postService = inject(PostService);

@@ -44,7 +44,7 @@ export class PostService {
           ...post,
           user: users.find((u) => u.id === post.userId),
         }));
-        return this.shuffleArray(merged); // 🔹 هنا نعمل shuffle
+        return this.shuffleArray(merged);
       })
     );
   }
@@ -81,7 +81,7 @@ export class PostService {
     });
 
     const withLikes = allPosts.map((post) => ({
-      post: { ...post, user: post.user! }, // نضمن أن user موجود
+      post: { ...post, user: post.user! },
       likes: likeCountMap[post.id] || 0,
     }));
 
@@ -136,7 +136,7 @@ export class PostService {
       });
     }
 
-    return this.getPosts().pipe(
+    return this.getPostsWithUsers().pipe(
       map((posts) => posts.filter((p) => savedIds.includes(p.id)))
     );
   }

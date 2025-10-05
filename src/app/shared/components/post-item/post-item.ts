@@ -14,7 +14,6 @@ import { PostService } from '../../../services/post/post';
 })
 export class PostItem implements OnInit {
   post = input.required<Post>();
-  commentsCount = input<number>(0);
   user = input<{ id: number; name: string }>();
 
   saved = signal(false);
