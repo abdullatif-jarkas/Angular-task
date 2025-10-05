@@ -20,16 +20,7 @@ export class Popular {
   loading = true;
 
   ngOnInit() {
-    this.postService.getPostsWithUsers().subscribe({
-      next: (posts) => {
-        this.popularPosts = this.postService.getMostLikedPosts(posts, 10);
-        this.loading = false;
-        console.log(this.popularPosts);
-      },
-      error: (err) => {
-        console.error('Failed to load popular posts', err);
-        this.loading = false;
-      },
-    });
+    this.popularPosts = this.postService.mostLikedPosts().slice(0, 10);
+    this.loading = false;
   }
 }

@@ -14,10 +14,6 @@ body {
   overflow-y: auto;
 }
 
-h1 {
-  font-family: "Playfair Display", sans-serif;
-}
-
 .arabic-font {
   font-family: 'Tajawal', sans-serif;
   direction: rtl; 

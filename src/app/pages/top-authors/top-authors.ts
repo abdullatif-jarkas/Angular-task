@@ -34,11 +34,11 @@ export class TopAuthors {
       users: this.postService.getUsers(),
     }).subscribe({
       next: ({ posts, users }) => {
-        const authorsStats = this.postService.getTopAuthors(posts, 5);
+        const authorsStats = this.postService.topAuthors().slice(0, 5);
 
         this.topAuthors = authorsStats
           .map((author) => {
-            const user = users.find((u) => u.id === author.userId);
+            const user = (users ?? []).find((u) => u.id === author.userId);
             return {
               id: user?.id ?? author.userId,
               name: user?.name ?? `User ${author.userId}`,
